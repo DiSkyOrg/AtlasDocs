@@ -11,6 +11,7 @@ docs.json              site configuration (untranslatable sections)
 en/<section>/<page>.md source pages, in English
 <code>/locale.json     one folder per translation (for example fr/)
 <code>/<section>/...   translated pages, at the same relative path as the English page
+assets/<section>/...   images, shared by every language
 ```
 
 Each folder of `en/` is a section, and `en/<section>/index.md` describes the section. A page is one

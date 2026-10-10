@@ -21,6 +21,13 @@ jobs:
         run: |
           locales=$(for d in */; do if [ -f "$d/locale.json" ]; then echo "${d%/}"; fi; done)
           zip -r docs.zip docs.json en $locales -i '*.md' '*.json'
+          # Images go in as empty files: the lint only checks that referenced images exist,
+          # and the upload stays under the endpoint's size limit.
+          if [ -d assets ]; then
+            stage=$(mktemp -d)
+            (cd assets && find . -type f -exec sh -c 'mkdir -p "$1/assets/$(dirname "$2")" && : > "$1/assets/$2"' _ "$stage" {} \;)
+            (cd "$stage" && zip -r "$GITHUB_WORKSPACE/docs.zip" assets)
+          fi
 
       - name: Send the archive to the atlas
         env:

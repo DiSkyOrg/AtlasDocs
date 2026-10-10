@@ -120,7 +120,7 @@ French, after translating (before `stamp.mjs`):
 ```yaml
 ---
 title: Démarrer un bot
-description: Créer un bot, lui donner un jeton, le connecter puis l'arrêter proprement.
+description: Créer un bot, lui donner un token, le connecter puis l'arrêter proprement.
 ---
 ```
 
@@ -130,7 +130,7 @@ example; the script writes the real one):
 ```yaml
 ---
 title: Démarrer un bot
-description: Créer un bot, lui donner un jeton, le connecter puis l'arrêter proprement.
+description: Créer un bot, lui donner un token, le connecter puis l'arrêter proprement.
 source-hash: 0123456789ab
 ---
 ```
@@ -163,9 +163,11 @@ Keep every `code span` unchanged, including words that are also English prose: `
 
 ### 4.3 Console messages
 
-Italic text that quotes a message printed by DiSky is copied verbatim, in prose and in tables. The
-column `Message (console)` of every error table is verbatim too. Only the `Cause` and `Fix` columns
-are translated.
+Italic text that quotes a message printed by DiSky (`*IllegalStateException: ...*`) is copied
+verbatim, in prose and in tables: readers search the console for that exact text. Everything else in
+an error table is translated, including the column headers (`Message (console)`, `Cause`, `Fix`) and
+plain, non-italic cells such as "No message; the effect does nothing", which describe a situation
+rather than quote the console.
 
 ### 4.4 Directive lines
 
@@ -173,7 +175,7 @@ A directive is a line of its own that starts with a name and a colon. The gramma
 page:
 
 | Directive | Grammar | Example | What you may translate |
-| --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | `syntax:` | `syntax: <ref> [compact\|standard\|full]` | `syntax: core/effects#effect-login-bot compact` | nothing |
 | `event:` | `event: <ref> [compact\|standard\|full]` | `event: events#bot-ready-event compact` | nothing |
 | `entity:` | `entity: <name>` | `entity: bot` | nothing |
@@ -201,6 +203,8 @@ Only the label of a link is translated. The target stays exactly as written:
 - Relative links must stay inside the page's own language folder. A link to a file outside `<code>/`
   (for example a file at the repository root) is reported as broken. Use plain text for those.
 - External URLs are never changed.
+- Images: translate the alt text only. The path (`![alt](../../assets/...)`) stays exactly as in the
+  English page; images are shared by every language.
 
 ### 4.6 Containers and admonitions
 
@@ -267,136 +271,152 @@ missing ids, and `stamp.mjs --ids` writes them.
 ## 6. Glossary
 
 Use this table for every recurring term. Look up the term in the first column, apply the rule, and
-use the `fr` column for French.
+use the column of your language (`fr`, `de`, `es`). A language without a column yet: add one before
+translating, following the same rules.
 
 Rules:
 
-- **keep in English**: write the English term unchanged, in French prose too.
-- **translate**: use the `fr` column.
-- **keep + explain on first use**: the first time the term appears on a page, write it with a short
-  French explanation in parentheses (`builder (objet de construction)`); later uses are the bare term.
+- **keep in English**: write the English term unchanged, in translated prose too.
+- **translate**: use your language's column.
+- **keep + explain on first use**: the first time the term appears on a page, write it with the short
+  explanation in parentheses given in your column (`builder (objet de construction)`); later uses are
+  the bare term.
+
+German capitalizes every noun: an English term kept in German prose is capitalized too (`der Bot`,
+`das Embed`, `der Webhook`), but code stays exactly as written.
 
 Code identifiers (`guild`, `event-bot`, `on ready`, `discord command`, `login`) are never translated
 by this table: it only governs prose.
 
-| English term | Meaning in DiSky | Rule | fr |
-| --- | --- | --- | --- |
-| DiSky | the plugin and the atlas | keep in English | DiSky |
-| DiSky Atlas | this documentation site | keep in English | DiSky Atlas |
-| Skript | the scripting language DiSky extends | keep in English | Skript |
-| addon | a Skript extension; DiSky is one | keep + explain on first use | addon (extension de Skript) |
-| Paper | the Minecraft server software | keep in English | Paper |
-| JDA | the Java library DiSky builds on | keep in English | JDA |
-| syntax | a pattern registered by DiSky (effect, expression, condition...) | translate | syntaxe (plural: syntaxes) |
-| effect | a statement that does something (`kick`, `post`) | translate | effet |
-| expression | a value (`name of {_bot}`) | translate | expression |
-| condition | a yes or no test (`if ... is connected`) | translate | condition |
-| event | something Discord sends, handled by an `on ...` line | translate | événement |
-| event value | a value of the current event (`event-bot`) | translate in prose; keep identifiers | valeur de l'événement |
-| section (Skript block) | an indented block (`try`, `catch`, `loop`) | keep + explain on first use | section (bloc indenté) |
-| section (page) | a part of a page under a heading | translate | section |
-| structure | a top-level declaration (`discord command`, `slash command`) | translate | structure |
-| type | a Skript type (`member`, `guild`) | translate | type |
-| property | a value read or set with `X of Y` | translate | propriété |
-| builder | an object configured, then sent to Discord | keep + explain on first use | builder (objet de construction) |
-| build result | the entity a builder creates (`the build result of`) | translate in prose; keep the expression | résultat de la construction |
-| bot | a Discord bot logged in with DiSky | keep in English | bot |
-| token | the secret that logs a bot in | translate | jeton |
-| log in (login) | to connect a bot to Discord | translate in prose ("connecter"); keep the `login` effect | connecter |
-| shut down (shutdown) | to disconnect a bot | translate in prose ("arrêter"); keep the `shutdown` effect | arrêter |
-| guild | a Discord server | translate | serveur (see note below) |
-| member | a user inside a guild | translate | membre |
-| user | a Discord account | translate | utilisateur |
-| role | a role of a guild | translate | rôle |
-| channel | a Discord channel | translate | salon |
-| text channel | a channel for text messages | translate | salon textuel |
-| voice channel | a channel for voice | translate | salon vocal |
-| stage channel | a channel for a live talk | translate | salon de conférence |
-| news channel | an announcement channel | translate | salon d'annonces |
-| forum channel | a channel made of posts | translate | salon de forum |
-| category | a group of channels | translate | catégorie |
-| thread | a sub-conversation of a channel | translate | fil |
-| message | a Discord message | translate | message |
-| embed | a rich block inside a message | keep in English | embed |
-| component | a button, a dropdown, a text input... | translate | composant |
-| button | a clickable component | translate | bouton |
-| dropdown (select menu) | a menu of choices | translate | menu déroulant |
-| modal | a pop-up form | translate | fenêtre modale |
-| text input | a field inside a modal | translate | champ de texte |
-| slash command | a `/name` command registered on Discord | translate | commande slash |
-| chat command | a command typed as `!name` in a channel | translate | commande textuelle |
-| interaction | a click or a command sent to the bot | translate | interaction |
-| context command | an entry of the right-click menu | translate | commande contextuelle |
-| context menu | the right-click menu | translate | menu contextuel |
-| Apps (menu) | the Discord submenu holding context commands | translate (Discord's French label) | Applications |
-| reply | a message sent as an answer (noun) | translate | réponse (verb: répondre) |
-| defer | to acknowledge an interaction early | translate | différer la réponse |
-| ephemeral | seen only by the user who triggered it | translate | éphémère |
-| webhook | an object that posts under a custom name | keep in English | webhook |
-| AutoMod | Discord's moderation filter | keep in English | AutoMod |
-| automod rule | a rule made of a trigger and actions | translate | règle AutoMod |
-| automod trigger (triggerconfig) | what an AutoMod rule looks for | translate | déclencheur |
-| automod response | what an AutoMod rule does (block, alert, timeout) | translate | action |
-| trigger (Skript block) | the code block of a command or event (`trigger:`) | keep + explain on first use | trigger (bloc de code) |
-| permission | a Discord permission (Manage Server...) | translate | permission |
-| intent | the events a bot subscribes to | keep + explain on first use | intent (abonnement aux événements) |
-| privileged intent | an intent that needs approval on the Developer Portal | translate | intent privilégié |
-| gateway | the connection to Discord | translate | passerelle |
-| shard | one gateway connection | keep + explain on first use | shard (connexion à la passerelle) |
-| sharding | splitting a bot over several shards | translate | découpage en shards |
-| cache | the bot's copy of data kept in memory | keep + explain on first use | cache (copie en mémoire) |
-| await | the Skript keyword that waits for Discord | keep in English | await |
-| snowflake | a Discord identifier | keep + explain on first use | snowflake (identifiant Discord) |
-| id | an identifier (`discord id`) | translate | identifiant |
-| mention | a `<@id>` ping | translate | mention |
-| emote (DiSky type) | a custom server emoji | translate in prose; keep `emote` in code | émoji personnalisé |
-| emoji | a standard emoji | keep in English | emoji |
-| reaction | an emoji added to a message | translate | réaction |
-| poll | a vote held in a message | translate | sondage |
-| vote | one choice made in a poll | translate | vote |
-| attachment | a file attached to a message | translate | pièce jointe |
-| file upload | a file prepared by DiSky to send | translate | envoi de fichier |
-| spoiler | a hidden image or file | keep in English | spoiler |
-| welcome screen | the screen shown to new members of a community | translate | écran d'accueil |
-| scheduled event (Discord) | an event planned on a server | translate | événement programmé |
-| audit log | the log of moderator actions | translate | journal d'audit |
-| invite | an invitation link | translate | invitation |
-| ban | removing a user from a guild for good | translate | bannissement (verb: bannir) |
-| member timeout | a temporary restriction of a member | translate | exclusion temporaire |
-| cooldown | the wait before a command can run again | translate | temps de recharge |
-| choice (slash) | a fixed answer of an option | translate | choix |
-| autocomplete | suggestions while the user types | translate | saisie semi-automatique |
-| option (slash) | an argument of a slash command | translate | option |
-| argument (chat) | a value typed after a chat command | translate | argument |
-| subcommand | a `/name sub` entry | translate | sous-commande |
-| localize | to give a translated name or description | translate | localiser |
-| locale | a Discord language code (`fr`, `en-GB`) | keep in English | locale |
-| nickname | a name specific to a guild | translate | pseudo |
-| online status | the presence dot (online, idle, dnd, invisible) | translate | statut en ligne |
-| activity | the "Playing..." text of a bot | translate | activité |
-| pin | to keep a message at the top of a channel | translate | épingler |
-| publish (crosspost) | to send an announcement to followers | translate | publier |
-| forward | to copy a message to another channel | translate | transférer |
-| purge | to delete a list of messages | translate | supprimer en masse |
-| typing indicator | the "is typing..." status | translate | saisie en cours |
-| admonition | a boxed note (`!!!`) | translate | encadré |
-| tab | one panel of `===` content | translate | onglet |
-| toggle | an on or off switch of a page | translate | bascule |
-| event line (`on ready`) | the trigger line of an event | keep in English, never translate | on ready |
-| console message | a line printed by DiSky | keep in English, verbatim | message de la console |
-| Developer Portal | Discord's dashboard for applications | translate | Portail développeur Discord |
-| Developer Mode | Discord's setting that shows ids | translate | Mode développeur |
-| manifest | the `disky-syntax.json` file | translate | manifeste |
+| English term | Meaning in DiSky | Rule | fr | de | es |
+| --- | --- | --- | --- | --- | --- |
+| DiSky | the plugin and the atlas | keep in English | DiSky | DiSky | DiSky |
+| DiSky Atlas | this documentation site | keep in English | DiSky Atlas | DiSky Atlas | DiSky Atlas |
+| Skript | the scripting language DiSky extends | keep in English | Skript | Skript | Skript |
+| addon | a Skript extension; DiSky is one | keep + explain on first use | addon (extension de Skript) | Addon (Skript-Erweiterung) | addon (extensión de Skript) |
+| Paper | the Minecraft server software | keep in English | Paper | Paper | Paper |
+| JDA | the Java library DiSky builds on | keep in English | JDA | JDA | JDA |
+| syntax | a pattern registered by DiSky (effect, expression, condition...) | translate | syntaxe (plural: syntaxes) | Syntax (Plural: Syntaxen) | sintaxis (plural: sintaxis) |
+| effect | a statement that does something (`kick`, `post`) | translate | effet | Effekt | efecto |
+| expression | a value (`name of {_bot}`) | translate | expression | Ausdruck | expresión |
+| condition | a yes or no test (`if ... is connected`) | translate | condition | Bedingung | condición |
+| event | something Discord sends, handled by an `on ...` line | translate | événement | Event | evento |
+| event value | a value of the current event (`event-bot`) | translate in prose; keep identifiers | valeur de l'événement | Event-Wert | valor del evento |
+| section (Skript block) | an indented block (`try`, `catch`, `loop`) | keep + explain on first use | section (bloc indenté) | Section (eingerückter Block) | section (bloque sangrado) |
+| section (page) | a part of a page under a heading | translate | section | Abschnitt | sección |
+| structure | a top-level declaration (`discord command`, `slash command`) | translate | structure | Struktur | estructura |
+| type | a Skript type (`member`, `guild`) | translate | type | Typ | tipo |
+| property | a value read or set with `X of Y` | translate | propriété | Eigenschaft | propiedad |
+| builder | an object configured, then sent to Discord | keep + explain on first use | builder (objet de construction) | Builder (Bauobjekt) | builder (objeto de construcción) |
+| build result | the entity a builder creates (`the build result of`) | translate in prose; keep the expression | résultat de la construction | Build-Ergebnis | resultado de la construcción |
+| bot | a Discord bot logged in with DiSky | keep in English | bot | Bot | bot |
+| token | the secret that logs a bot in | keep in English | token | Token | token |
+| log in (login) | to connect a bot to Discord | translate in prose ("connecter"); keep the `login` effect | connecter | anmelden | conectar |
+| shut down (shutdown) | to disconnect a bot | translate in prose ("arrêter"); keep the `shutdown` effect | arrêter | herunterfahren | apagar |
+| guild | a Discord server | translate | serveur (see note below) | Server | servidor |
+| member | a user inside a guild | translate | membre | Mitglied | miembro |
+| user | a Discord account | translate | utilisateur | Benutzer | usuario |
+| role | a role of a guild | translate | rôle | Rolle | rol |
+| channel | a Discord channel | translate | salon | Kanal | canal |
+| text channel | a channel for text messages | translate | salon textuel | Textkanal | canal de texto |
+| voice channel | a channel for voice | translate | salon vocal | Sprachkanal | canal de voz |
+| stage channel | a channel for a live talk | translate | salon de conférence | Stage-Kanal | canal de escenario |
+| news channel | an announcement channel | translate | salon d'annonces | Ankündigungskanal | canal de anuncios |
+| forum channel | a channel made of posts | translate | salon de forum | Forumkanal | canal de foro |
+| category | a group of channels | translate | catégorie | Kategorie | categoría |
+| thread | a sub-conversation of a channel | translate | fil | Thread | hilo |
+| message | a Discord message | translate | message | Nachricht | mensaje |
+| embed | a rich block inside a message | keep in English | embed | Embed | embed |
+| component | a button, a dropdown, a text input... | translate | composant | Komponente | componente |
+| button | a clickable component | translate | bouton | Button | botón |
+| dropdown (select menu) | a menu of choices | translate | menu déroulant | Auswahlmenü | menú desplegable |
+| modal | a pop-up form | translate | fenêtre modale | Modal | modal |
+| text input | a field inside a modal | translate | champ de texte | Textfeld | campo de texto |
+| slash command | a `/name` command registered on Discord | translate | commande slash | Slash-Befehl | comando de barra |
+| chat command | a command typed as `!name` in a channel | translate | commande textuelle | Chat-Befehl | comando de chat |
+| interaction | a click or a command sent to the bot | translate | interaction | Interaktion | interacción |
+| context command | an entry of the right-click menu | translate | commande contextuelle | Kontextbefehl | comando contextual |
+| context menu | the right-click menu | translate | menu contextuel | Kontextmenü | menú contextual |
+| Apps (menu) | the Discord submenu holding context commands | translate (Discord's French label) | Applications | Apps | Aplicaciones |
+| reply | a message sent as an answer (noun) | translate | réponse (verb: répondre) | Antwort (Verb: antworten) | respuesta (verbo: responder) |
+| defer | to acknowledge an interaction early | translate | différer la réponse | Antwort verzögern | diferir la respuesta |
+| ephemeral | seen only by the user who triggered it | translate | éphémère | flüchtig (nur für dich sichtbar) | efímero |
+| webhook | an object that posts under a custom name | keep in English | webhook | Webhook | webhook |
+| AutoMod | Discord's moderation filter | keep in English | AutoMod | AutoMod | AutoMod |
+| automod rule | a rule made of a trigger and actions | translate | règle AutoMod | AutoMod-Regel | regla de AutoMod |
+| automod trigger (triggerconfig) | what an AutoMod rule looks for | translate | déclencheur | Auslöser | activador |
+| automod response | what an AutoMod rule does (block, alert, timeout) | translate | action | Aktion | acción |
+| trigger (Skript block) | the code block of a command or event (`trigger:`) | keep + explain on first use | trigger (bloc de code) | Trigger (Codeblock) | trigger (bloque de código) |
+| permission | a Discord permission (Manage Server...) | translate | permission | Berechtigung | permiso |
+| intent | the events a bot subscribes to | keep + explain on first use | intent (abonnement aux événements) | Intent (Event-Abonnement) | intent (suscripción a eventos) |
+| privileged intent | an intent that needs approval on the Developer Portal | translate | intent privilégié | privilegierter Intent | intent privilegiado |
+| gateway | the connection to Discord | translate | passerelle | Gateway | gateway |
+| shard | one gateway connection | keep + explain on first use | shard (connexion à la passerelle) | Shard (Gateway-Verbindung) | shard (conexión al gateway) |
+| sharding | splitting a bot over several shards | translate | découpage en shards | Sharding | sharding |
+| cache | the bot's copy of data kept in memory | keep + explain on first use | cache (copie en mémoire) | Cache (Kopie im Speicher) | caché (copia en memoria) |
+| await | the Skript keyword that waits for Discord | keep in English | await | await | await |
+| snowflake | a Discord identifier | keep + explain on first use | snowflake (identifiant Discord) | Snowflake (Discord-ID) | snowflake (identificador de Discord) |
+| id | an identifier (`discord id`) | translate | identifiant | ID | ID |
+| mention | a `<@id>` ping | translate | mention | Erwähnung | mención |
+| emote (DiSky type) | a custom server emoji | translate in prose; keep `emote` in code | émoji personnalisé | Server-Emoji | emoji personalizado |
+| emoji | a standard emoji | keep in English | emoji | Emoji | emoji |
+| reaction | an emoji added to a message | translate | réaction | Reaktion | reacción |
+| poll | a vote held in a message | translate | sondage | Umfrage | encuesta |
+| vote | one choice made in a poll | translate | vote | Stimme | voto |
+| attachment | a file attached to a message | translate | pièce jointe | Anhang | archivo adjunto |
+| file upload | a file prepared by DiSky to send | translate | envoi de fichier | Datei-Upload | subida de archivo |
+| spoiler | a hidden image or file | keep in English | spoiler | Spoiler | spoiler |
+| welcome screen | the screen shown to new members of a community | translate | écran d'accueil | Willkommensbildschirm | pantalla de bienvenida |
+| scheduled event (Discord) | an event planned on a server | translate | événement programmé | geplantes Event | evento programado |
+| audit log | the log of moderator actions | translate | journal d'audit | Audit-Log | registro de auditoría |
+| invite | an invitation link | translate | invitation | Einladung | invitación |
+| ban | removing a user from a guild for good | translate | bannissement (verb: bannir) | Bann (Verb: bannen) | baneo (verbo: banear) |
+| member timeout | a temporary restriction of a member | translate | exclusion temporaire | Timeout | aislamiento temporal |
+| cooldown | the wait before a command can run again | translate | temps de recharge | Abklingzeit | tiempo de espera |
+| choice (slash) | a fixed answer of an option | translate | choix | Auswahlmöglichkeit | opción fija |
+| autocomplete | suggestions while the user types | translate | saisie semi-automatique | Autovervollständigung | autocompletado |
+| option (slash) | an argument of a slash command | translate | option | Option | opción |
+| argument (chat) | a value typed after a chat command | translate | argument | Argument | argumento |
+| subcommand | a `/name sub` entry | translate | sous-commande | Unterbefehl | subcomando |
+| localize | to give a translated name or description | translate | localiser | lokalisieren | localizar |
+| locale | a Discord language code (`fr`, `en-GB`) | keep in English | locale | Locale | locale |
+| nickname | a name specific to a guild | translate | pseudo | Nickname | apodo |
+| online status | the presence dot (online, idle, dnd, invisible) | translate | statut en ligne | Online-Status | estado en línea |
+| activity | the "Playing..." text of a bot | translate | activité | Aktivität | actividad |
+| pin | to keep a message at the top of a channel | translate | épingler | anheften | fijar |
+| publish (crosspost) | to send an announcement to followers | translate | publier | veröffentlichen | publicar |
+| forward | to copy a message to another channel | translate | transférer | weiterleiten | reenviar |
+| purge | to delete a list of messages | translate | supprimer en masse | massenhaft löschen | eliminar en masa |
+| typing indicator | the "is typing..." status | translate | saisie en cours | Tipp-Anzeige | indicador de escritura |
+| admonition | a boxed note (`!!!`) | translate | encadré | Hinweisbox | recuadro |
+| tab | one panel of `===` content | translate | onglet | Tab | pestaña |
+| toggle | an on or off switch of a page | translate | bascule | Schalter | interruptor |
+| event line (`on ready`) | the trigger line of an event | keep in English, never translate | on ready | on ready | on ready |
+| console message | a line printed by DiSky | keep in English, verbatim | message de la console | Konsolenmeldung | mensaje de consola |
+| Developer Portal | Discord's dashboard for applications | keep in English (the portal is English-only) | Discord Developer Portal | Discord Developer Portal | Discord Developer Portal |
+| Developer Mode | Discord's setting that shows ids | translate | Mode développeur | Entwicklermodus | Modo desarrollador |
+| manifest | the `disky-syntax.json` file | translate | manifeste | Manifest | manifiesto |
+| getter | an expression that reads a value | keep in English | getter | Getter | getter |
+| buffer | memory holding data before it is sent | translate | tampon | Puffer | búfer |
+| main thread | the server thread Skript runs on | translate | thread principal | Haupt-Thread | hilo principal |
+| worker thread | a background thread | translate | thread de travail | Worker-Thread | hilo de trabajo |
+| parse error | an error Skript reports while loading a script | translate | erreur d'analyse | Parse-Fehler | error de análisis |
+| direct message (DM) | a private message to a user | translate | message privé | Direktnachricht | mensaje directo |
+| leaf command | a command entry that runs code (no subcommands) | translate | commande finale | ausführbarer Befehl | comando final |
+| registry | the name to bot map of DiSky | translate | registre | Registry | registro |
+| payload | the data sent to Discord | translate | contenu envoyé | Payload | carga |
+| rate limit | Discord's limit on requests | keep + explain on first use | rate limit (limite de requêtes) | Rate Limit (Anfragelimit) | rate limit (límite de peticiones) |
 
 **Guild and server.** The English docs say *guild* for the Discord object, and reserve *server* for
-Discord's own UI. In French, translate *guild* as **serveur**, which is the word Discord's French
-client uses. The Minecraft server is then written **serveur Minecraft** (or **serveur Paper**) every
-time, so the two never look alike on a page. The code `guild` and every `guild#...` link stay as they
-are.
+Discord's own UI. Translate *guild* with the word Discord's client uses: **serveur** (fr), **Server**
+(de), **servidor** (es). The Minecraft server is then always written with its name (**serveur
+Minecraft**, **Minecraft-Server**, **servidor de Minecraft**, or the Paper equivalents), so the two
+never look alike on a page. The code `guild` and every `guild#...` link stay as they are.
 
 **Discord UI labels.** Bold labels that name a button or a page of Discord's interface (for example
-`**Bot → Privileged Gateway Intents**`, `**Manage Server**`) must match the label of the French client.
-If you cannot check the French client, keep the English label; do not invent one.
+`**Bot → Privileged Gateway Intents**`, `**Manage Server**`) must match the label of Discord's client in
+your language. The Developer Portal is English-only: its labels always stay in English. If you cannot
+check the client, keep the English label; do not invent one.
 
 ## 7. Style per language
 
@@ -410,8 +430,8 @@ If you cannot check the French client, keep the English label; do not invent one
   - "You're assumed to have ..." becomes "Vous devez déjà avoir ...".
   - "Pair every `login` with a `shutdown`" becomes "Associez chaque `login` à un `shutdown`".
   - "A bot starts as ..." becomes "Un bot commence comme ...".
-- Gender: *le bot*, *le jeton*, *le serveur*, *la commande*, *la propriété*, *l'événement* (elision
-  with an apostrophe).
+- Gender: *le bot*, *le token*, *le serveur*, *la commande*, *la propriété*, *l'événement*, *l'embed*
+  (masculine), *le webhook* (elision with an apostrophe).
 - Typography:
   - Use a normal space before `:`, `;`, `?` and `!`. A non-breaking space is not required here.
   - Use straight double quotes `"` and straight apostrophes `'` in prose, the same as the English
@@ -422,6 +442,42 @@ If you cannot check the French client, keep the English label; do not invent one
   written in code are not changed.
 - Units: keep `ms`, `MB`, `KB` as they are. Write durations in words: `10 secondes`, `24 heures`,
   `7 jours` (the English `24 hours` becomes `24 heures`).
+
+### German (de)
+
+- Tone: direct, technical, short sentences, as in the English. No filler ("Es ist wichtig zu
+  beachten, dass...").
+- Address the reader with **du** (as Discord's German client does), never *Sie*. Imperatives in steps
+  use the *du* form: *Öffne*, *Schreibe*, *Erstelle*. Capitalize *du*/*dein* only at the start of a
+  sentence.
+- Common English phrases:
+  - "You're assumed to have ..." becomes "Du solltest bereits ... haben".
+  - "Pair every `login` with a `shutdown`" becomes "Kombiniere jedes `login` mit einem `shutdown`".
+- Gender: *der Bot*, *der Token*, *der Server*, *der Befehl*, *die Eigenschaft*, *das Event*, *das
+  Embed*, *der Webhook*, *die Nachricht*, *der Kanal*.
+- Compounds with a code or English term use a hyphen: `Slash-Befehl`, `Event-Wert`, `Webhook-Client`,
+  `login`-Effekt. Never glue code into a word.
+- Typography: straight double quotes `"` and straight apostrophes `'` (no „German" quotes), no em dash
+  (U+2014).
+- Numbers in prose: a period for thousands (`1.000`) and a comma for decimals (`0,5`). Numbers in code
+  are not changed.
+- Units: keep `ms`, `MB`, `KB`. Durations in words: `10 Sekunden`, `24 Stunden`, `7 Tage`.
+
+### Spanish (es)
+
+- Tone: direct, technical, short sentences, as in the English. Neutral Spanish (no regional slang).
+- Address the reader with **tú** (as Discord's Spanish client does), never *usted*. Imperatives in
+  steps use the *tú* form: *Abre*, *Escribe*, *Crea*.
+- Common English phrases:
+  - "You're assumed to have ..." becomes "Se asume que ya tienes ...".
+  - "Pair every `login` with a `shutdown`" becomes "Acompaña cada `login` con un `shutdown`".
+- Gender: *el bot*, *el token*, *el servidor*, *el comando*, *la propiedad*, *el evento*, *el embed*,
+  *el webhook*, *el mensaje*, *el canal*.
+- Typography: opening marks are required (`¿Por qué?`, `¡Listo!`). Straight double quotes `"` and
+  straight apostrophes `'` (no «comillas»), no em dash (U+2014).
+- Numbers in prose: a space or a period for thousands (`1000`, `10 000`), a comma for decimals
+  (`0,5`). Numbers in code are not changed.
+- Units: keep `ms`, `MB`, `KB`. Durations in words: `10 segundos`, `24 horas`, `7 días`.
 
 ## 8. UI strings
 

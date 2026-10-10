@@ -80,10 +80,16 @@ every save; refresh the browser to see the change. No build step, no cache to cl
 
 ## Images
 
-Put doc images in `wwwroot/assets/docs/` and reference them site-absolute:
+Images live in the `assets/` folder at the root of this repository, shared by every language.
+Group them by section (`assets/getting-started/token-page.png`) and reference them with a path
+relative to the page, so they also show up in the GitHub preview:
 
 ```markdown
-![The settings dialog](/assets/docs/settings-dialog.png)
+![The bot token page](../../assets/getting-started/token-page.png)
 ```
 
-Relative image paths are flagged by the lint pass, so everything stays in one predictable place.
+- Supported types: `png`, `jpg`, `jpeg`, `gif`, `webp`, `svg` and `avif`.
+- The site serves them under `/docs-assets/`, so a translated page uses the exact same path.
+- The lint pass reports an image that doesn't exist or sits outside `assets/`.
+- Keep files small (compress screenshots; prefer `webp` for photos and `svg` for diagrams) and always
+  write a meaningful alt text.
