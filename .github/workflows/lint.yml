@@ -1,0 +1,42 @@
+name: Docs lint
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build the docs archive
+        run: |
+          locales=$(for d in */; do if [ -f "$d/locale.json" ]; then echo "${d%/}"; fi; done)
+          zip -r docs.zip docs.json en $locales -i '*.md' '*.json'
+
+      - name: Send the archive to the atlas
+        env:
+          ATLAS_URL: ${{ vars.ATLAS_URL }}
+        run: |
+          status=$(curl -sS -X POST \
+            -H "Content-Type: application/zip" \
+            --data-binary @docs.zip \
+            "${ATLAS_URL:-https://atlas.disky.me}/api/v1/docs/lint" \
+            -o result.json -w "%{http_code}")
+          if [ "$status" != "200" ]; then
+            echo "Lint request failed with HTTP $status:"
+            cat result.json
+            echo
+            exit 1
+          fi
+
+      - name: Report warnings
+        run: node scripts/lint-report.mjs result.json
