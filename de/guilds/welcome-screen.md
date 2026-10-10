@@ -7,7 +7,7 @@ source-hash: 2dcafa1de6ee
 Diese Seite behandelt den Willkommensbildschirm: die Karte, die ein Community-Server neuen Mitgliedern
 zeigt, mit einer Beschreibung und bis zu fünf empfohlenen Kanälen. Du wirst als jemand vorausgesetzt, der
 einen Bot namens `"my-bot"` angemeldet hat, einen Server mit aktivierter **Community** und für den Bot die
-Berechtigung **Server verwalten**, wenn er den Bildschirm bearbeitet.
+Berechtigung **Manage Server**, wenn er den Bildschirm bearbeitet.
 
 ## Den Willkommensbildschirm lesen {#reading-the-welcome-screen}
 
@@ -97,6 +97,6 @@ syntax: welcomechannel#new-welcome-channel compact
 | Ein *Discord error* beim Lesen des Bildschirms | Der Server ist kein Community-Server oder hat nie einen Willkommensbildschirm eingerichtet | Aktiviere **Community** in den Servereinstellungen |
 | *the channel '...' cannot be put on a welcome screen* | Der Eintrag zeigt auf eine Kategorie oder einen Thread | Verwende einen Text-, Sprach-, Stage-, Ankündigungs- oder Forenkanal |
 | *[50035] Invalid Form Body* mit dem Namen `welcome_channels` | Mehr als 5 Einträge oder eine Beschreibung mit mehr als 42 Zeichen | Kürze die Liste oder die Beschreibung |
-| Ein *Discord error* mit dem Namen **Missing Permissions** | Dem Bot fehlt **Server verwalten** | Gewähre sie ihm |
+| Ein *Discord error* mit dem Namen **Missing Permissions** | Dem Bot fehlt **Manage Server** | Gewähre sie ihm |
 
 entity: welcomescreenbuilder

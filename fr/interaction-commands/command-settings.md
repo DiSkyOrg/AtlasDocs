@@ -44,7 +44,7 @@ slash command roll <sides: integer>:
 défaut ; les administrateurs peuvent toujours l'utiliser, et une liste vide signifie que tout le monde
 peut l'utiliser. `disabled` masque la commande à tout le monde sauf aux administrateurs, quel que soit
 `enabled for`. Ces deux réglages ne sont que des valeurs par défaut : les réglages d'intégration
-propres à un serveur, modifiés par un membre disposant de **Gérer le serveur**, peuvent encore les
+propres à un serveur, modifiés par un membre disposant de **Manage Server**, peuvent encore les
 remplacer côté Discord.
 
 ```skript

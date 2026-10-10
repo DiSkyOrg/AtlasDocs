@@ -12,8 +12,8 @@ ne sont pas répétées ici.
 ## Fonctionnement d'un getter {#how-a-getter-works}
 
 Chaque entité accessible hors d'un événement possède un getter de la forme `X with id %string%`. L'identifiant
-est le snowflake (identifiant Discord) de l'entité, copié depuis le client avec le **Mode développeur** activé (clic droit,
-**Copier l'identifiant**). Le getter renvoie l'entité, ou rien lorsque le bot ne connaît pas cet identifiant.
+est le snowflake (identifiant Discord) de l'entité, copié depuis le client avec le **Developer Mode** activé (clic droit,
+**Copy ID**). Le getter renvoie l'entité, ou rien lorsque le bot ne connaît pas cet identifiant.
 
 ```skript
 on message received seen by "my-bot":

@@ -337,7 +337,7 @@ by this table: it only governs prose.
 | interaction | a click or a command sent to the bot | translate | interaction | Interaktion | interacción |
 | context command | an entry of the right-click menu | translate | commande contextuelle | Kontextbefehl | comando contextual |
 | context menu | the right-click menu | translate | menu contextuel | Kontextmenü | menú contextual |
-| Apps (menu) | the Discord submenu holding context commands | translate (Discord's French label) | Applications | Apps | Aplicaciones |
+| Apps (menu) | the Discord submenu holding context commands | keep in English (Discord UI label) | Apps | Apps | Apps |
 | reply | a message sent as an answer (noun) | translate | réponse (verb: répondre) | Antwort (Verb: antworten) | respuesta (verbo: responder) |
 | defer | to acknowledge an interaction early | translate | différer la réponse | Antwort verzögern | diferir la respuesta |
 | ephemeral | seen only by the user who triggered it | translate | éphémère | flüchtig (nur für dich sichtbar) | efímero |
@@ -394,7 +394,7 @@ by this table: it only governs prose.
 | event line (`on ready`) | the trigger line of an event | keep in English, never translate | on ready | on ready | on ready |
 | console message | a line printed by DiSky | keep in English, verbatim | message de la console | Konsolenmeldung | mensaje de consola |
 | Developer Portal | Discord's dashboard for applications | keep in English (the portal is English-only) | Discord Developer Portal | Discord Developer Portal | Discord Developer Portal |
-| Developer Mode | Discord's setting that shows ids | translate | Mode développeur | Entwicklermodus | Modo desarrollador |
+| Developer Mode | Discord's setting that shows ids | keep in English (Discord UI label) | Developer Mode | Developer Mode | Developer Mode |
 | manifest | the `disky-syntax.json` file | translate | manifeste | Manifest | manifiesto |
 | getter | an expression that reads a value | keep in English | getter | Getter | getter |
 | buffer | memory holding data before it is sent | translate | tampon | Puffer | búfer |
@@ -413,10 +413,11 @@ Discord's own UI. Translate *guild* with the word Discord's client uses: **serve
 Minecraft**, **Minecraft-Server**, **servidor de Minecraft**, or the Paper equivalents), so the two
 never look alike on a page. The code `guild` and every `guild#...` link stay as they are.
 
-**Discord UI labels.** Bold labels that name a button or a page of Discord's interface (for example
-`**Bot → Privileged Gateway Intents**`, `**Manage Server**`) must match the label of Discord's client in
-your language. The Developer Portal is English-only: its labels always stay in English. If you cannot
-check the client, keep the English label; do not invent one.
+**Discord UI labels.** Labels that name a button, a menu, a permission, a setting or a page of
+Discord's interface or of the Developer Portal always stay in English, exactly as in the English page:
+`**Manage Server**`, `**Manage Messages**`, `**Apps**`, `**Community**`, `**Developer Mode**`,
+`**Copy ID**`, `**Integrations → Webhooks → Copy Webhook URL**`, `**Bot → Privileged Gateway Intents**`,
+the activity display `*Playing <text>*`. Only the sentence around them is translated.
 
 ## 7. Style per language
 

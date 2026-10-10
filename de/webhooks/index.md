@@ -20,7 +20,7 @@ Sende-Effekt beides.
 
 | Du hast | Du erhältst | Kann senden | Kann umbenennen, verschieben, löschen |
 | --- | --- | --- | --- |
-| Einen Kanal, in dem der Bot **Webhooks verwalten** hat | einen `webhook` (erstellen oder abrufen) | ja | ja |
+| Einen Kanal, in dem der Bot **Manage Webhooks** hat | einen `webhook` (erstellen oder abrufen) | ja | ja |
 | Nur eine Webhook-URL | einen `webhookclient` | ja | nein |
 
 ## Lesereihenfolge {#reading-order}

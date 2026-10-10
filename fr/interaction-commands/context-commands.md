@@ -5,12 +5,12 @@ source-hash: dfc6f4ec35c2
 ---
 
 Cette page couvre `user command` et `message command` : les structures à l'origine du menu
-**Applications** du clic droit de Discord, et leurs équivalents en builders. Vous devez déjà avoir un
+**Apps** du clic droit de Discord, et leurs équivalents en builders. Vous devez déjà avoir un
 bot nommé `"my-bot"` connecté et avoir lu [Commandes slash](doc:interaction-commands/slash-commands).
 
 ## Fonctionnement des commandes contextuelles {#how-context-commands-work}
 
-Un clic droit sur un utilisateur ou un message dans Discord ouvre un sous-menu **Applications** ; chaque
+Un clic droit sur un utilisateur ou un message dans Discord ouvre un sous-menu **Apps** ; chaque
 entrée de ce sous-menu est une commande contextuelle. Une structure `user command` répond à un clic sur
 un utilisateur, une `message command` à un clic sur un message ; toutes deux sont des modèles, exactement
 comme `slash command`, avec un `trigger` qui s'exécute dès qu'on choisit l'entrée.

@@ -60,7 +60,7 @@ geschrieben werden (`voice state` oder `voice_state`).
 | [cache flags](syntax:bot#cache-flags) | nicht gesetzt (die Standardwerte von JDA gelten) | `"default"`, `"all"`, `"none"` oder durch Kommas getrennte Flag-Namen |
 | [compression](syntax:bot#compression) | `"zlib"` | `"zlib"`, `"none"` |
 | [shard count](syntax:bot#shard-count) | `-1` (von Discord empfohlene Anzahl) | `-1`, `1` oder eine beliebige Zahl ab 2 |
-| [activity](syntax:bot#activity) | keine | beliebiger Text, angezeigt als *Spielt <text>* |
+| [activity](syntax:bot#activity) | keine | beliebiger Text, angezeigt als *Playing <text>* |
 | [online status](syntax:bot#online-status) | Discords Standard (online) | `online`, `idle`, `dnd`, `invisible` |
 
 ## Intents {#intents}
@@ -198,7 +198,7 @@ syntax: bot#shard-count compact
 
 ## Präsenz {#presence}
 
-Die `activity` legt den Text fest, der unter dem Namen des Bots als *Spielt <text>* angezeigt wird;
+Die `activity` legt den Text fest, der unter dem Namen des Bots als *Playing <text>* angezeigt wird;
 ein leerer Text entfernt ihn. Der `online status` wählt den Statuspunkt: `online`, `idle`, `dnd`
 (nicht stören) oder `invisible`. Anders als die Verbindungsoptionen wirken beide sofort: Setzt du sie
 vor `login`, erhält der Bot seine Startpräsenz, und setzt du sie auf einem laufenden Bot, aktualisieren

@@ -6,7 +6,7 @@ source-hash: 16ff0b33d451
 
 Dieser Abschnitt behandelt die Regeln, die auf einem Server bereits existieren, egal ob ein Skript oder
 ein Moderator sie erstellt hat: sie lesen, ändern und löschen und das Event, das auslöst, wenn eine davon
-handelt. Du solltest einen Bot namens `"my-bot"` mit **Server verwalten** angemeldet haben und die
+handelt. Du solltest einen Bot namens `"my-bot"` mit **Manage Server** angemeldet haben und die
 [drei `await`-Regeln](doc:concepts/cache-and-await) kennen.
 
 ## Die Regeln eines Servers lesen {#reading-a-guilds-rules}

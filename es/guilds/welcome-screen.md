@@ -6,7 +6,7 @@ source-hash: 2dcafa1de6ee
 
 Esta página cubre la pantalla de bienvenida: la tarjeta que un servidor comunitario muestra a los nuevos
 miembros, con una descripción y hasta cinco canales recomendados. Se asume que tienes un bot llamado
-`"my-bot"` conectado, un servidor con **Comunidad** activada y el permiso **Gestionar servidor** para el
+`"my-bot"` conectado, un servidor con **Community** activada y el permiso **Manage Server** para el
 bot si edita la pantalla.
 
 ## Leer la pantalla de bienvenida {#reading-the-welcome-screen}
@@ -94,9 +94,9 @@ syntax: welcomechannel#new-welcome-channel compact
 
 | Mensaje (consola) | Causa | Solución |
 | --- | --- | --- |
-| Un *Discord error* al leer la pantalla | El servidor no es comunitario, o nunca configuró una pantalla de bienvenida | Activa **Comunidad** en la configuración del servidor |
+| Un *Discord error* al leer la pantalla | El servidor no es comunitario, o nunca configuró una pantalla de bienvenida | Activa **Community** en la configuración del servidor |
 | *the channel '...' cannot be put on a welcome screen* | La entrada apunta a una categoría o a un hilo | Usa un canal de texto, de voz, de escenario, de anuncios o de foro |
 | *[50035] Invalid Form Body* que nombra `welcome_channels` | Más de 5 entradas, o una descripción de más de 42 caracteres | Recorta la lista o la descripción |
-| Un *Discord error* que nombra **Missing Permissions** | Al bot le falta **Gestionar servidor** | Concédelo |
+| Un *Discord error* que nombra **Missing Permissions** | Al bot le falta **Manage Server** | Concédelo |
 
 entity: welcomescreenbuilder

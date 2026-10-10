@@ -13,7 +13,7 @@ Webhook-URL bauen. Du solltest einen Bot namens `"my-bot"` angemeldet haben und 
 
 [`a new webhook builder named %string% in %guildchannel%`](syntax:webhookaction#new-webhook-builder)
 bereitet einen Webhook in einem Kanal vor. Wie jeder Builder (Bauobjekt) existiert nichts auf Discord,
-bis du `the build result of` unter `await` liest. Der Bot braucht **Webhooks verwalten** in diesem Kanal.
+bis du `the build result of` unter `await` liest. Der Bot braucht **Manage Webhooks** in diesem Kanal.
 
 ```skript
 on message received seen by "my-bot":
@@ -35,7 +35,7 @@ syntax: webhookaction#new-webhook-builder compact
 [`webhooks of %guild%`](syntax:guild#webhooks) listet jeden Webhook eines Servers auf, und
 [`channel webhooks of %standardguildmessagechannel%`](syntax:standardguildmessagechannel#channel-webhooks)
 die eines einzelnen Kanals. Beide fragen bei Discord nach, daher brauchen beide `await` (siehe
-[Cache (Kopie im Speicher) und await](doc:concepts/cache-and-await)), und beide benötigen **Webhooks verwalten**.
+[Cache (Kopie im Speicher) und await](doc:concepts/cache-and-await)), und beide benötigen **Manage Webhooks**.
 
 ```skript
 on message received seen by "my-bot":
@@ -50,7 +50,7 @@ syntax: guild#webhooks compact
 ## Einen Client aus einer URL bauen {#building-a-client-from-a-url}
 
 [`a new webhook client from url %string%`](syntax:webhookclient#new-webhook-client) macht aus einer
-Webhook-URL (die Discord unter **Integrationen → Webhooks → Webhook-URL kopieren** anzeigt) einen Client.
+Webhook-URL (die Discord unter **Integrations → Webhooks → Copy Webhook URL** anzeigt) einen Client.
 Dafür braucht es keine Berechtigung auf dem Server, und der Bot muss nicht darauf sein: Der Bot trägt nur
 die HTTP-Anfragen. Ohne `using bot` wird der einzige geladene Bot verwendet.
 
@@ -116,7 +116,7 @@ on message received seen by "my-bot":
 | Meldung (Konsole) | Ursache | Lösung |
 | --- | --- | --- |
 | *a webhook client needs a running bot to carry its requests* | `a new webhook client from url` lief, ohne dass ein Bot angemeldet war, oder mit mehreren Bots und keinem davon benannt | Melde zuerst einen Bot an, oder füge `using bot "my-bot"` hinzu |
-| Ein *Discord error* mit **Missing Permissions** | Dem Bot fehlt **Webhooks verwalten** im Kanal | Gewähre sie im Kanal oder auf dem Server |
+| Ein *Discord error* mit **Missing Permissions** | Dem Bot fehlt **Manage Webhooks** im Kanal | Gewähre sie im Kanal oder auf dem Server |
 | *[10015] Unknown Webhook* | Der Webhook wurde gelöscht, oder die URL ist falsch | Erstelle einen neuen Webhook oder prüfe die URL |
 
 entity: webhook

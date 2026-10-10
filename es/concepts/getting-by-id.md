@@ -12,7 +12,7 @@ y que conoces las [reglas de await](doc:concepts/cache-and-await), que aquí no 
 
 Toda entidad a la que puedes llegar desde fuera de un evento tiene un getter con la forma
 `X with id %string%`. El ID es el *snowflake* (identificador de Discord) de la entidad, copiado desde el
-cliente con el **Modo desarrollador** activado (clic derecho, **Copiar ID**). El getter devuelve la entidad,
+cliente con el **Developer Mode** activado (clic derecho, **Copy ID**). El getter devuelve la entidad,
 o nada si el bot no conoce ese ID.
 
 ```skript

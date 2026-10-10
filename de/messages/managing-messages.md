@@ -66,7 +66,7 @@ syntax: message#edit compact
 
 [`pin`](syntax:message#pin) fügt eine Nachricht den angehefteten Nachrichten ihres Kanals hinzu, und
 [`unpin`](syntax:message#unpin) entfernt sie wieder; ein Kanal hält bis zu 50 angeheftete Nachrichten.
-Eine Nachricht anzuheften, die nicht vom Bot stammt, erfordert die Berechtigung **Nachrichten verwalten**.
+Eine Nachricht anzuheften, die nicht vom Bot stammt, erfordert die Berechtigung **Manage Messages**.
 
 ```skript
 on message received seen by "my-bot":
@@ -119,7 +119,7 @@ on message received seen by "my-bot":
 Größere Listen werden in Stapel zu je 100 aufgeteilt, eine einzelne Nachricht fällt auf ein normales
 Löschen zurück, und Nachrichten, die älter als zwei Wochen sind, werden einzeln gelöscht. Du musst die
 Liste nie selbst filtern. Das Löschen von Nachrichten anderer Benutzer, einzeln oder in Massen, erfordert
-**Nachrichten verwalten**.
+**Manage Messages**.
 
 !!! danger "Löschen ist endgültig"
     `destroy` und `purge` fragen nicht nach einer Bestätigung, und eine gelöschte Nachricht lässt sich
@@ -210,9 +210,9 @@ on message received seen by "my-bot":
 
 | Meldung (Konsole) | Ursache | Lösung |
 | --- | --- | --- |
-| *[50013] Missing Permissions* bei `pin`, `unpin`, `destroy` oder `publish` | Die Nachricht gehört nicht dem Bot, und dem Bot fehlt **Nachrichten verwalten** in diesem Kanal | Gib der Rolle des Bots die Berechtigung, oder bearbeite nur die eigenen Nachrichten des Bots |
+| *[50013] Missing Permissions* bei `pin`, `unpin`, `destroy` oder `publish` | Die Nachricht gehört nicht dem Bot, und dem Bot fehlt **Manage Messages** in diesem Kanal | Gib der Rolle des Bots die Berechtigung, oder bearbeite nur die eigenen Nachrichten des Bots |
 | *IllegalStateException: Attempted to update message that was not sent by this account. You cannot modify other User's messages!* | `edit` wurde eine Nachricht eines anderen Benutzers übergeben | Bearbeite nur Nachrichten, die der Bot gesendet hat; andernfalls `destroy` und sende eine neue |
-| *InsufficientPermissionException: Cannot delete messages of other users* | `purge` hat eine Nachricht eines anderen Benutzers erhalten, und dem Bot fehlt **Nachrichten verwalten** | Vergib die Berechtigung, oder filtere die Liste mit `discord author of`, bevor du `purge` aufrufst |
+| *InsufficientPermissionException: Cannot delete messages of other users* | `purge` hat eine Nachricht eines anderen Benutzers erhalten, und dem Bot fehlt **Manage Messages** | Vergib die Berechtigung, oder filtere die Liste mit `discord author of`, bevor du `purge` aufrufst |
 | *[10008] Unknown Message* | Die Nachricht wurde gelöscht, bevor der Effekt lief, oder `message with id` hat eine falsche ID erhalten | Prüfe die ID, oder umschließe die Zeile mit einem `try` und lies den [Fehler](doc:concepts/errors) |
 
 entity: message

@@ -8,7 +8,7 @@ AutoMod ist der integrierte Filter von Discord: Eine Regel sucht in Nachrichten 
 nach etwas und reagiert von selbst, auch wenn der Bot offline ist. Dieser Abschnitt behandelt das
 Erstellen von Regeln, das Bearbeiten der Regeln, die ein Server bereits hat, und die Reaktion, wenn eine
 davon auslöst. Du solltest einen Bot namens `"my-bot"` angemeldet haben (siehe
-[Einen Bot starten](doc:getting-started/starting-a-bot)), mit **Server verwalten** auf dem Server, und
+[Einen Bot starten](doc:getting-started/starting-a-bot)), mit **Manage Server** auf dem Server, und
 den [Builder-Vertrag](doc:concepts/builders) kennen.
 
 ## Woraus eine Regel besteht {#what-a-rule-is-made-of}

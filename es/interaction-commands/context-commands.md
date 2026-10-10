@@ -4,13 +4,13 @@ description: Las estructuras y builders de comandos del menú contextual del cli
 source-hash: dfc6f4ec35c2
 ---
 
-Esta página cubre `user command` y `message command`: las estructuras detrás del menú **Aplicaciones**
+Esta página cubre `user command` y `message command`: las estructuras detrás del menú **Apps**
 del clic derecho de Discord, y sus equivalentes en builder (objeto de construcción). Se asume que tienes
 un bot llamado `"my-bot"` conectado y que has leído [Comandos de barra](doc:interaction-commands/slash-commands).
 
 ## Cómo funcionan los comandos contextuales {#how-context-commands-work}
 
-Al hacer clic derecho sobre un usuario o un mensaje en Discord se abre un submenú **Aplicaciones**; cada
+Al hacer clic derecho sobre un usuario o un mensaje en Discord se abre un submenú **Apps**; cada
 entrada de ahí es un comando contextual. Una estructura `user command` responde a un clic sobre un
 usuario, y una `message command` responde a un clic sobre un mensaje. Ambas son modelos, igual que
 `slash command`, con un `trigger` que se ejecuta cuando alguien elige la entrada.

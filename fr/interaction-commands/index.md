@@ -5,7 +5,7 @@ source-hash: 5e0612dbf4f7
 ---
 
 Une *commande d'interaction* est enregistrée sur Discord et affichée par le client lui-même : une
-`/command` dans le sélecteur, ou une entrée du menu **Applications** du clic droit sur un
+`/command` dans le sélecteur, ou une entrée du menu **Apps** du clic droit sur un
 utilisateur ou un message. Discord vérifie le type de ses arguments et les valide avant que le bot
 ne les reçoive. Vous devez déjà avoir un bot nommé `"my-bot"` connecté (voir
 [Démarrer un bot](doc:getting-started/starting-a-bot)).
@@ -30,7 +30,7 @@ rechargement, ni au déchargement.
 | --- | --- |
 | Une `/command` avec son propre trigger, connue au chargement du script | une [structure de commande slash](slash-commands.md) |
 | Une `/command` assemblée à l'exécution, à partir de données ou par serveur | un [builder (objet de construction)](command-builders.md) |
-| Une entrée du menu **Applications** du clic droit | une [commande contextuelle](context-commands.md), structure ou builder |
+| Une entrée du menu **Apps** du clic droit | une [commande contextuelle](context-commands.md), structure ou builder |
 | Une commande reconnue dans un texte tapé, sans enregistrement Discord | une [commande textuelle](doc:chat-commands) |
 
 Les deux formes produisent les mêmes objets de commande et peuvent être envoyées dans le même appel ;

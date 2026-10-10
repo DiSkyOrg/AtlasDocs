@@ -66,7 +66,7 @@ syntax: message#edit compact
 
 [`pin`](syntax:message#pin) ajoute un message aux épingles de son salon et
 [`unpin`](syntax:message#unpin) le retire ; un salon contient jusqu'à 50 messages épinglés. Épingler un
-message qui n'est pas celui du bot exige la permission **Gérer les messages**.
+message qui n'est pas celui du bot exige la permission **Manage Messages**.
 
 ```skript
 on message received seen by "my-bot":
@@ -209,9 +209,9 @@ on message received seen by "my-bot":
 
 | Message (console) | Cause | Solution |
 | --- | --- | --- |
-| *[50013] Missing Permissions* on `pin`, `unpin`, `destroy` or `publish` | Le message n'appartient pas au bot, et le bot n'a pas **Gérer les messages** dans ce salon | Accordez la permission au rôle du bot, ou n'agissez que sur les messages du bot |
+| *[50013] Missing Permissions* on `pin`, `unpin`, `destroy` or `publish` | Le message n'appartient pas au bot, et le bot n'a pas **Manage Messages** dans ce salon | Accordez la permission au rôle du bot, ou n'agissez que sur les messages du bot |
 | *IllegalStateException: Attempted to update message that was not sent by this account. You cannot modify other User's messages!* | `edit` a reçu un message écrit par quelqu'un d'autre | Ne modifiez que les messages envoyés par le bot ; sinon, `destroy` le message et envoyez-en un nouveau |
-| *InsufficientPermissionException: Cannot delete messages of other users* | `purge` a reçu un message écrit par quelqu'un d'autre, et le bot n'a pas **Gérer les messages** | Accordez la permission, ou filtrez la liste sur `discord author of` avant de purger |
+| *InsufficientPermissionException: Cannot delete messages of other users* | `purge` a reçu un message écrit par quelqu'un d'autre, et le bot n'a pas **Manage Messages** | Accordez la permission, ou filtrez la liste sur `discord author of` avant de purger |
 | *[10008] Unknown Message* | Le message a été supprimé avant l'exécution de l'effet, ou `message with id` a reçu un mauvais identifiant | Vérifiez l'identifiant, ou entourez la ligne d'un `try` et lisez l'[erreur](doc:concepts/errors) |
 
 entity: message

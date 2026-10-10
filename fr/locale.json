@@ -1,7 +1,7 @@
 {
   "name": "Français",
   "englishName": "French",
-  "aiTranslated": true,
+  "aiTranslated": false,
   "ui": {
     "index.title": "Documentation",
     "index.lead": "Des guides écrits à la main qui complètent la référence de syntaxes générée.",

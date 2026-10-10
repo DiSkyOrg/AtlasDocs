@@ -6,7 +6,7 @@ source-hash: 2dcafa1de6ee
 
 Cette page couvre l'écran d'accueil : la carte qu'un serveur communautaire affiche aux nouveaux
 membres, avec une description et jusqu'à cinq salons recommandés. Vous devez avoir un bot nommé
-`"my-bot"` connecté, un serveur avec **Communauté** activée, et la permission **Gérer le serveur** pour
+`"my-bot"` connecté, un serveur avec **Community** activée, et la permission **Manage Server** pour
 le bot s'il modifie l'écran.
 
 ## Lire l'écran d'accueil {#reading-the-welcome-screen}
@@ -94,9 +94,9 @@ syntax: welcomechannel#new-welcome-channel compact
 
 | Message (console) | Cause | Solution |
 | --- | --- | --- |
-| Une *erreur Discord* lors de la lecture de l'écran | Le serveur n'est pas un serveur communautaire, ou n'a jamais configuré d'écran d'accueil | Activez **Communauté** dans les paramètres du serveur |
+| Une *erreur Discord* lors de la lecture de l'écran | Le serveur n'est pas un serveur communautaire, ou n'a jamais configuré d'écran d'accueil | Activez **Community** dans les paramètres du serveur |
 | *the channel '...' cannot be put on a welcome screen* | L'entrée pointe vers une catégorie ou un fil | Utilisez un salon textuel, vocal, de conférence, d'annonces ou de forum |
 | *[50035] Invalid Form Body* mentionnant `welcome_channels` | Plus de 5 entrées, ou une description de plus de 42 caractères | Raccourcissez la liste ou la description |
-| Une *erreur Discord* mentionnant **Missing Permissions** | Le bot n'a pas la permission **Gérer le serveur** | Accordez-la |
+| Une *erreur Discord* mentionnant **Missing Permissions** | Le bot n'a pas la permission **Manage Server** | Accordez-la |
 
 entity: welcomescreenbuilder

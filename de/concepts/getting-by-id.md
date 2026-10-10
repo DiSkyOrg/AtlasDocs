@@ -12,8 +12,8 @@ wiederholt werden.
 ## So funktioniert ein Getter {#how-a-getter-works}
 
 Jede Entität, die du außerhalb eines Events erreichst, hat einen Getter der Form `X with id %string%`. Die ID ist
-der Snowflake (Discord-ID) der Entität, aus dem Client kopiert, wenn der **Entwicklermodus** aktiviert ist
-(Rechtsklick, **ID kopieren**). Der Getter liefert die Entität oder nichts, wenn der Bot diese ID nicht kennt.
+der Snowflake (Discord-ID) der Entität, aus dem Client kopiert, wenn der **Developer Mode** aktiviert ist
+(Rechtsklick, **Copy ID**). Der Getter liefert die Entität oder nichts, wenn der Bot diese ID nicht kennt.
 
 ```skript
 on message received seen by "my-bot":

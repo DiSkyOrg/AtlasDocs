@@ -58,7 +58,7 @@ minúsculas; los nombres que contienen un espacio pueden escribirse con espacio 
 | [cache flags](syntax:bot#cache-flags) | ninguna establecida (se aplican los valores propios de JDA) | `"default"`, `"all"`, `"none"` o nombres de flags separados por comas |
 | [compression](syntax:bot#compression) | `"zlib"` | `"zlib"`, `"none"` |
 | [shard count](syntax:bot#shard-count) | `-1` (el número recomendado por Discord) | `-1`, `1` o cualquier número igual o mayor que 2 |
-| [activity](syntax:bot#activity) | ninguna | cualquier texto, que se muestra como *Jugando a <text>* |
+| [activity](syntax:bot#activity) | ninguna | cualquier texto, que se muestra como *Playing <text>* |
 | [online status](syntax:bot#online-status) | el predeterminado de Discord (online) | `online`, `idle`, `dnd`, `invisible` |
 
 ## Intents {#intents}
@@ -192,7 +192,7 @@ syntax: bot#shard-count compact
 
 ## Presencia {#presence}
 
-`activity` establece el texto que se muestra bajo el nombre del bot como *Jugando a <text>*; un texto
+`activity` establece el texto que se muestra bajo el nombre del bot como *Playing <text>*; un texto
 vacío lo elimina. `online status` elige el punto de presencia: `online`, `idle`, `dnd` (no molestar) o
 `invisible`. A diferencia de las opciones de conexión, ambas son en vivo: establecerlas antes de
 `login` da al bot su presencia inicial, y establecerlas en un bot en ejecución actualiza todos los

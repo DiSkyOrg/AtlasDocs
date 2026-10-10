@@ -4,7 +4,7 @@ description: Comandos de barra y comandos contextuales del clic derecho, declara
 source-hash: 5e0612dbf4f7
 ---
 
-Un *comando de interacción* se registra en Discord y lo muestra el propio cliente: un `/command` en el selector, o una entrada del menú **Aplicaciones** del clic derecho sobre un usuario o un mensaje. Discord tipa y valida sus argumentos antes de que el bot los vea. Se asume que tienes un bot llamado `"my-bot"` conectado (consulta [Iniciar un bot](doc:getting-started/starting-a-bot)).
+Un *comando de interacción* se registra en Discord y lo muestra el propio cliente: un `/command` en el selector, o una entrada del menú **Apps** del clic derecho sobre un usuario o un mensaje. Discord tipa y valida sus argumentos antes de que el bot los vea. Se asume que tienes un bot llamado `"my-bot"` conectado (consulta [Iniciar un bot](doc:getting-started/starting-a-bot)).
 
 ```skript
 slash command ping:
@@ -24,7 +24,7 @@ La estructura declara el comando y su trigger; el bloque `on guild ready` es el 
 | --- | --- |
 | Un `/command` con su propio trigger, conocido al cargar el script | una [estructura de comando de barra](slash-commands.md) |
 | Un `/command` armado en tiempo de ejecución, a partir de datos o por servidor | un [builder (objeto de construcción) de comandos](command-builders.md) |
-| Una entrada del menú **Aplicaciones** del clic derecho | un [comando contextual](context-commands.md), estructura o builder |
+| Una entrada del menú **Apps** del clic derecho | un [comando contextual](context-commands.md), estructura o builder |
 | Un comando que responde a texto escrito, sin registro en Discord | un [comando de chat](doc:chat-commands) |
 
 Ambas formas producen los mismos objetos de comando y se pueden enviar en la misma llamada. Una

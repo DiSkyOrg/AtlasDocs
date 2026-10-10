@@ -5,7 +5,7 @@ source-hash: ffe6c5764397
 ---
 
 Dieser Abschnitt behandelt den Builder für AutoMod-Regeln: die zwei Arten von Regeln, die Eigenschaften,
-die eine Regel annimmt, und den Build. Du solltest einen Bot namens `"my-bot"` mit **Server verwalten**
+die eine Regel annimmt, und den Build. Du solltest einen Bot namens `"my-bot"` mit **Manage Server**
 angemeldet haben und den [Builder-Vertrag](doc:concepts/builders) kennen.
 
 ## So wird eine Regel erstellt {#how-a-rule-is-created}
@@ -92,6 +92,6 @@ on message received seen by "my-bot":
 | *[50035] Invalid Form Body* gefolgt vom betroffenen Feld | Ein Auslöser, der pro Server nur einmal vorkommt, hat schon eine Regel, oder ein Wert liegt außerhalb von Discords Grenzen | Bearbeite die vorhandene Regel; prüfe das Feld, das in der Meldung genannt wird |
 | *[50035] Invalid Form Body* mit dem Namen `actions` | Keine Aktion, oder eine Aktion, die der Auslöser nicht erlaubt (ein Timeout bei einer Spam-Regel) | Siehe die Tabelle der Aktionen unter [Auslöser und Aktionen](doc:automod/triggers-and-responses) |
 | *building talks to Discord, so this requires 'await'* (Parse-Fehler) | `the build result of` wurde ohne `await` gelesen | Schreibe `await set {_rule} to the build result of {_b}` |
-| Ein *Discord error* mit **Missing Permissions** | Dem Bot fehlt **Server verwalten** | Gewähre sie |
+| Ein *Discord error* mit **Missing Permissions** | Dem Bot fehlt **Manage Server** | Gewähre sie |
 
 entity: automodrulebuilder

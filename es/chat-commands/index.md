@@ -23,7 +23,7 @@ Enviar `!ping` en cualquier canal que el bot pueda ver ejecuta el trigger y resp
 | Necesidad | Qué usar |
 | --- | --- |
 | Responder al texto escrito, sin registro en Discord, en cualquier cliente | un comando de chat, esta sección |
-| Un `/command` que muestra el selector propio de Discord, o una entrada del menú contextual **Aplicaciones** | un [comando de interacción](doc:interaction-commands) |
+| Un `/command` que muestra el selector propio de Discord, o una entrada del menú contextual **Apps** | un [comando de interacción](doc:interaction-commands) |
 
 Ambas familias pueden convivir en el mismo script: un comando de chat lee sus argumentos del
 texto del mensaje, mientras que un comando de interacción recibe esos argumentos ya tipados y
