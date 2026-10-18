@@ -1,7 +1,7 @@
 ---
 title: Builders
 description: Configurer un rôle, un salon, un message ou une invitation localement, puis le créer sur Discord en une ligne.
-source-hash: 364a92d0c720
+source-hash: 503304a94d51
 ---
 
 Cette page présente le contrat commun à tous les builders (objets de construction) de DiSky : comment
@@ -99,6 +99,8 @@ changent. Les formes indiquées sont la syntaxe minimale : `named` accepte aussi
 | [Webhook](entity:webhookaction) | un webhook | `a new webhook builder named %string% in %guildchannel%` | [clients webhook](doc:webhooks/webhook-clients) |
 | [Message webhook](entity:webhookmessageaction) | un message envoyé par un webhook | `a new webhook message with content %string% through %webhookclient%` | [envoyer via un webhook](doc:webhooks/posting-through-webhooks) |
 | [Règle AutoMod](entity:automodrulebuilder) | une règle AutoMod | `a new automod rule builder named %string% in %guild% for messages using %triggerconfig%` | [créer une règle](doc:automod/creating-rules) |
+| [Émoji personnalisé](entity:emotebuilder) | un émoji personnalisé du serveur | `a new emote builder named %string% with image %string/fileupload% in %guild%` | [émojis personnalisés et stickers](doc:guilds/emotes-and-stickers) |
+| [Sticker](entity:stickerbuilder) | un sticker du serveur | `a new sticker builder named %string% with image %string/fileupload% in %guild%` | [émojis personnalisés et stickers](doc:guilds/emotes-and-stickers) |
 | [Événement programmé (salon)](entity:scheduledeventaction) | un événement programmé tenu dans un salon vocal ou de conférence | `a new scheduled event builder named %string% in %guildchannel% starting at %date%` | plus tard |
 | [Événement programmé (externe)](entity:scheduledeventaction) | un événement programmé tenu à un lieu donné | `a new scheduled event builder named %string% at %string% starting at %date% ending at %date% in %guild%` | plus tard |
 | [Message](entity:messageaction) | un message envoyé | `a new message with content %string% in %messagechannel%` ou `a new message with embed %embedbuilder% in %messagechannel%` | [envoyer des messages](doc:messages/sending-messages) |

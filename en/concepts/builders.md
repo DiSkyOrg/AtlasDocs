@@ -101,6 +101,8 @@ The patterns are the minimal spelling: `named` also accepts `with the name`, and
 | [Webhook](entity:webhookaction) | a webhook | `a new webhook builder named %string% in %guildchannel%` | [webhook clients](doc:webhooks/webhook-clients) |
 | [Webhook message](entity:webhookmessageaction) | a message sent by a webhook | `a new webhook message with content %string% through %webhookclient%` | [posting through a webhook](doc:webhooks/posting-through-webhooks) |
 | [AutoMod rule](entity:automodrulebuilder) | an AutoMod rule | `a new automod rule builder named %string% in %guild% for messages using %triggerconfig%` | [creating a rule](doc:automod/creating-rules) |
+| [Emote](entity:emotebuilder) | a guild emote | `a new emote builder named %string% with image %string/fileupload% in %guild%` | [emotes and stickers](doc:guilds/emotes-and-stickers) |
+| [Sticker](entity:stickerbuilder) | a guild sticker | `a new sticker builder named %string% with image %string/fileupload% in %guild%` | [emotes and stickers](doc:guilds/emotes-and-stickers) |
 | [Scheduled event (channel)](entity:scheduledeventaction) | a scheduled event held in a voice or stage channel | `a new scheduled event builder named %string% in %guildchannel% starting at %date%` | later |
 | [Scheduled event (external)](entity:scheduledeventaction) | a scheduled event held at a location | `a new scheduled event builder named %string% at %string% starting at %date% ending at %date% in %guild%` | later |
 | [Message](entity:messageaction) | a sent message | `a new message with content %string% in %messagechannel%` or `a new message with embed %embedbuilder% in %messagechannel%` | [sending messages](doc:messages/sending-messages) |
