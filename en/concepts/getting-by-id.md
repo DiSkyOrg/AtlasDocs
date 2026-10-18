@@ -8,6 +8,7 @@ syntaxes:
   - user#user-with-id
   - message#message-with-id
   - role#role-with-id
+  - core/expressions#expression-member-of-user
 order: 3
 ---
 
@@ -128,6 +129,36 @@ on message received seen by "my-bot":
             stop
         reply with "found %name of {_user}%"
 ```
+
+### Without an id
+
+Some entities are found from something other than their id: a member from its user, a sticker
+from its name, an emoji from its name or shortcode. They follow the rule of `member with id`:
+written plainly they read the cache, and with `await` they also ask Discord when the cache has
+nothing.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!sticker":
+        await set {_member} to member of event-user in event-guild
+        set {_sticker} to sticker named "wave" in event-guild
+        if {_sticker} is not set:
+            reply with "this guild has no sticker named wave"
+            stop
+        reply with "%{_member}% asked for %name of {_sticker}%"
+```
+
+| Getter | Scope | Await | Example |
+| --- | --- | --- | --- |
+| [member of](syntax:core/expressions#expression-member-of-user) | `in %guild%` | optional: cache, or Discord with `await` | `await set {_m} to member of event-user in event-guild` |
+| [sticker named](syntax:core/expressions#expression-sticker-named) | `in %guild%` | optional: cache, or Discord with `await` | `sticker named "wave" in event-guild` |
+| [emoji](syntax:core/expressions#expression-emoji) | optional `in %guild%` | optional: cache, or Discord with `await` | `emoji "joy"`, `emote "disky" in event-guild` |
+
+Names are compared case-insensitively. A `member of` or `sticker named` that finds nothing
+returns nothing, like a cached id lookup; an awaited `member of` a user who is not in the guild
+is an *Unknown Member* error. An `emoji` that matches nothing is always a readable error (see
+[Reactions](doc:messages/reactions) for the order it tries). The color of an embed or a role is
+not looked up at all: Skript's own `color from hex code "#FF5733"` builds one from its hex code.
 
 ## Errors you may see
 

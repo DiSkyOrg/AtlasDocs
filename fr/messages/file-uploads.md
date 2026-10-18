@@ -1,7 +1,7 @@
 ---
 title: Envois de fichiers
 description: Construire un fichier depuis un chemin local, une url ou une pièce jointe reçue, le joindre à un message et relire les pièces jointes.
-source-hash: fde9e2c311e4
+source-hash: 5006783db3e9
 ---
 
 Cette page explique comment envoyer des fichiers : construire un envoi de fichier depuis un chemin
@@ -119,6 +119,33 @@ on message received seen by "my-bot":
             add {_f} to attachments of {_m}
             await set {_sent} to the build result of {_m}
 ```
+
+### Télécharger une pièce jointe {#downloading-an-attachment}
+
+[`download`](syntax:attachment#download) enregistre une pièce jointe dans un fichier du serveur. La
+ligne attend que le fichier soit écrit, donc la ligne suivante peut déjà le lire ou le renvoyer.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!save":
+        loop discord attachments of event-message:
+            download loop-value to folder "plugins/MyScript/uploads/"
+        reply with "saved %size of discord attachments of event-message% file(s)"
+```
+
+Le chemin décide de l'emplacement du fichier :
+
+| Chemin | Enregistré comme |
+| --- | --- |
+| se termine par `/` ou `\`, ou désigne un dossier existant | ce dossier, sous le `file name` de la pièce jointe |
+| tout autre chemin | exactement ce fichier (`to file "plugins/MyScript/last.png"`) |
+
+Les dossiers manquants sont créés, et un fichier déjà présent à ce chemin est écrasé. Un chemin
+relatif part du dossier racine du serveur (celui du jar du serveur) : `plugins/MyScript/` arrive donc à
+côté des autres dossiers de plugins. Les mots `folder`, `file` et `path` ne servent qu'à la lecture :
+`download {_att} to "plugins/MyScript/uploads/"` fait la même chose que l'exemple ci-dessus.
+
+syntax: attachment#download compact
 
 ## Erreurs que vous pouvez rencontrer {#errors-you-may-see}
 

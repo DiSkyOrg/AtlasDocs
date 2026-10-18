@@ -1,18 +1,19 @@
 ---
 title: Errors
 icon: shield-alert
-description: What happens when Discord refuses an action, and how try/catch and the last discord error let a script react to it.
+description: What happens when Discord refuses an action, and how try/catch, the last discord error and the global error event let a script react to it.
 tags: [concepts, errors, try, catch]
 syntaxes:
   - core/sections#section-try-catch
   - core/expressions#expression-last-discord-error
+  - events#disky-error-event
 order: 5
 ---
 
 This page covers what DiSky does when an action fails, on Discord's side or in your script,
-and the two tools you have to react to it: the `try` / `catch` section and
-`the last discord error`. You're assumed to have a bot named `"my-bot"` logged in and a guild
-where it can act.
+and the tools you have to react to it: the `try` / `catch` section, `the last discord error`
+and the `on disky exception` event. You're assumed to have a bot named `"my-bot"` logged in
+and a guild where it can act.
 
 ## What happens without a try
 
@@ -43,7 +44,9 @@ stack trace of the underlying exception.
 
 The error is also remembered in [the last discord error](syntax:core/expressions#expression-last-discord-error),
 so the line after the failure can read it. That expression is global: it holds the most
-recent error of any bot, caught or not, and is `<none>` until one has happened.
+recent error of any bot, caught or not, and is `<none>` until one has happened. To handle
+every such error in one place instead of reading the console, see
+[handling every uncaught error](#handling-every-uncaught-error).
 
 ## Catching errors with try
 
@@ -151,6 +154,38 @@ on ready seen by "my-bot":
 ```
 
 syntax: core/expressions#expression-last-discord-error compact
+
+## Handling every uncaught error
+
+An [`on disky exception`](event:events#disky-error-event) handler (`on discord error` is the
+same event) fires on the main thread for every error that no `try` caught, just before DiSky
+prints it. `event-discorderror` is the error, with the three properties above, and
+`error location` names the script file and line that failed. Write `cancel event` to keep
+the error out of the console.
+
+```skript
+on disky exception:
+    cancel event
+    send "[my-bot] %event-discorderror% (%error location ? "no script line"%)" to console
+    if error code of event-discorderror is 50013:
+        post "Missing permission: %error meaning of event-discorderror%" to text channel with id "123456789012345678"
+```
+
+Four rules tell what reaches the handler and what it changes:
+
+- An error raised inside a `try` goes to its `catch` and never fires the event, so a script
+  can mix both: `try` where it has a precise answer, the global handler for the rest.
+- `cancel event` only decides whether the console block is printed, and the decision is taken
+  as soon as the handler pauses. Cancel before the first `wait` or Discord effect, as above.
+- An error raised by the handler itself (a log channel that was deleted) is printed to the
+  console and never fires the event again, so a failing handler cannot loop. The one gap is a
+  property changed without `await`: its request is sent in the background and comes back
+  with no trigger attached, so write `await set ...` inside the handler.
+- `event-bot` is the bot whose event was running when the error happened. It is unset for an
+  error with no trigger behind it, and so is `error location`; a `seen by "my-bot"` filter
+  skips those errors.
+
+event: events#disky-error-event compact
 
 ## Common Discord error codes
 

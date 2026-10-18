@@ -1,7 +1,7 @@
 ---
 title: Événements
 description: De quoi est fait un gestionnaire d'événement DiSky, quelles valeurs il expose et ce qu'il ne peut pas faire.
-source-hash: b72eacb81599
+source-hash: 8115ccf52a85
 ---
 
 Cette page décrit la forme d'un gestionnaire d'événement DiSky : la ligne `on ...:` et son filtre
@@ -140,6 +140,8 @@ déclarée : [`on discord command used`](event:events#discord-command-used), où
 (voir [liste et événements](doc:chat-commands/listing-and-events)), et
 [`on slash command cooldown`](event:events#application-command-cooldown), où l'annulation laisse la commande
 s'exécuter malgré son temps de recharge (voir [paramètres des commandes](doc:interaction-commands/command-settings)).
+[`on disky exception`](event:events#disky-error-event) est lui aussi annulable : l'annuler empêche une
+erreur non interceptée d'apparaître dans la console (voir [erreurs](doc:concepts/errors#handling-every-uncaught-error)).
 
 ## Familles d'événements {#event-families}
 
@@ -161,6 +163,7 @@ familles ; les valeurs citées ci-dessous sont celles que partage le plus souven
 | Rôles | `on discord guild role created`, `on discord guild role permissions update` | `event-role`, `event-guild` |
 | Vocal | `on member voice join`, `on discord guild voice muted` | `event-member`, `event-guild` |
 | Ressources du serveur | `on discord emoji added`, `on discord guild sticker added`, `on discord scheduled event create` | `event-guild` |
+| Erreurs | `on disky exception` | `event-discorderror`, `error location`, `event-bot` |
 
 !!! tip "Journaliser pendant l'exploration"
     Une simple fonction Skript permet de vérifier à moindre coût quels événements se déclenchent et ce que

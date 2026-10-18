@@ -1,7 +1,7 @@
 ---
 title: Embeds
 description: Construire un embed Discord en local, définir chacune de ses propriétés et ses champs, puis l'envoyer avec post, reply with ou un builder de message.
-source-hash: ccb478d348a6
+source-hash: 2d2c4fd9a5c9
 ---
 
 Cette page couvre la construction d'un embed Discord : chaque propriété que vous pouvez y définir, ses
@@ -42,7 +42,7 @@ champs et de la longueur totale ne s'appliquent qu'une fois l'embed attaché que
 | [title](syntax:embedbuilder#title) | aucun | texte, jusqu'à 256 caractères |
 | [title url](syntax:embedbuilder#title-url) | aucun | une URL `http(s)://` ou `attachment://` |
 | [description](syntax:embedbuilder#description) | aucun | texte, jusqu'à 4096 caractères |
-| [color](syntax:embedbuilder#color) | aucun | une couleur |
+| [color](syntax:embedbuilder#color) | aucun | une couleur : une couleur nommée (`orange`), ou n'importe quel code hexadécimal avec le `color from hex code "#FF5733"` de Skript |
 | [discord author](syntax:embedbuilder#discord-author) | aucun | texte, jusqu'à 256 caractères |
 | [author icon](syntax:embedbuilder#author-icon) | aucun | une URL `http(s)://` ou `attachment://` |
 | [author url](syntax:embedbuilder#author-url) | aucun | une URL `http(s)://` ou `attachment://` |
@@ -108,10 +108,39 @@ ajout.
 
 syntax: core/expressions#expression-new-embed-field compact
 
+## Plusieurs embeds {#several-embeds}
+
+Un message porte jusqu'à 10 embeds. `post` et `reply with` en prennent un seul ; pour davantage,
+utilisez la propriété [embeds](syntax:messageaction#embeds) d'un builder de message. `set` remplace la
+liste, `add` y ajoute et `delete` la vide, tandis que la propriété au singulier `embed` définit un seul
+embed et retire les autres. Chaque embed est copié à la ligne qui le définit ou l'ajoute : modifier
+`{_e}` ensuite ne change rien dans le builder.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!report":
+        set {_summary} to a new discord embed
+        set title of {_summary} to "Summary"
+        set {_details} to a new discord embed
+        set title of {_details} to "Details"
+        set {_m} to a new message with content "Weekly report" in event-channel
+        set embeds of {_m} to {_summary} and {_details}
+        await set {_sent} to the build result of {_m}
+        reply with "%size of embeds of {_sent}% embeds sent"
+```
+
+Les embeds n'ont pas d'identifiant, il n'y a donc pas de `remove` : redéfinissez la liste sans celui que
+vous voulez retirer. La liste ne se relit pas non plus depuis le builder ; lisez `embeds of` le message
+envoyé. Dépasser 10, par `set` comme par `add`, est refusé sur cette ligne avec une erreur lisible et
+laisse le builder inchangé. Un message qui contient des composants V2 (conteneurs, sections, affichages
+de texte) ne peut porter aucun embed.
+
+syntax: messageaction#embeds compact
+
 ## Lire des embeds {#reading-embeds}
 
-[`embeds of`](syntax:message#embeds) d'un message envoyé renvoie ses embeds ; un message construit avec
-DiSky porte un seul embed, donc la liste ne contient généralement qu'un élément. Chacun revient sous forme
+[`embeds of`](syntax:message#embeds) d'un message envoyé renvoie ses embeds dans l'ordre d'affichage,
+jusqu'à 10 (voir [Plusieurs embeds](#several-embeds)). Chacun revient sous forme
 de `MessageEmbed` de JDA, un type en lecture seule sans type Skript propre, mais DiSky le convertit en
 `embedbuilder` partout où un tel type est attendu : stockez-le dans une variable, définissez-lui d'autres
 propriétés, puis renvoyez-le comme nouvel embed.
@@ -138,5 +167,6 @@ nouvel embed (voir [gérer les messages](doc:messages/managing-messages)).
 | *IllegalArgumentException: Name cannot be longer than 256 characters* (or *Value cannot be longer than 1024 characters*) | Le nom ou la valeur d'un champ est trop long | Raccourcissez-le avant de créer le champ |
 | *IllegalStateException: Cannot build an empty embed!* | L'embed ne contenait rien (ni titre, description, champ, auteur, footer, image ni thumbnail) au moment de l'attacher à un message | Définissez au moins une propriété avant `set embed of` ou `a new message with embed` |
 | *IllegalStateException: Cannot build an embed with more than 25 embed fields set!* | Plus de 25 champs ont été ajoutés | Gardez 25 champs au maximum, ou répartissez le contenu sur plusieurs embeds |
+| *IllegalArgumentException: a message carries 10 embeds at most, this one would have 11* | `set embeds of` ou `add ... to embeds of` sur un builder de message a dépassé la limite de Discord | Gardez 10 embeds au maximum par message ; envoyez le reste dans un second message |
 
 entity: embedbuilder

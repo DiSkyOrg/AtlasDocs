@@ -145,6 +145,8 @@ The exceptions are the events DiSky fires itself, before running a command it de
 command (see [listing and events](doc:chat-commands/listing-and-events)), and
 [`on slash command cooldown`](event:events#application-command-cooldown), where cancelling
 lets the command run despite its cooldown (see [command settings](doc:interaction-commands/command-settings)).
+[`on disky exception`](event:events#disky-error-event) is cancellable too: cancelling it keeps
+an uncaught error out of the console (see [errors](doc:concepts/errors#handling-every-uncaught-error)).
 
 ## Event families
 
@@ -166,6 +168,7 @@ the values named below are the ones most of the family shares.
 | Roles | `on discord guild role created`, `on discord guild role permissions update` | `event-role`, `event-guild` |
 | Voice | `on member voice join`, `on discord guild voice muted` | `event-member`, `event-guild` |
 | Guild assets | `on discord emoji added`, `on discord guild sticker added`, `on discord scheduled event create` | `event-guild` |
+| Errors | `on disky exception` | `event-discorderror`, `error location`, `event-bot` |
 
 !!! tip "Logging while you explore"
     A plain Skript function makes it cheap to check which events fire and what their values

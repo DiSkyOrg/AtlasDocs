@@ -102,6 +102,7 @@ Every property below is write-only on the builder: read it back on the sent mess
 | --- | --- | --- |
 | [discord content](syntax:messageaction#discord-content) | none set | any text |
 | [embed](syntax:messageaction#embed) | none set | an [embed](doc:messages/embeds) |
+| [embeds](syntax:messageaction#embeds) | none set | up to 10 [embeds](doc:messages/embeds#several-embeds); `set`, `add`, `delete` |
 | [attached poll](syntax:messageaction#attached-poll) | none set | a [poll](doc:messages/creating-polls) |
 | [tts](syntax:messageaction#tts) | `false` | `true`, `false` |
 | [suppressed embeds](syntax:messageaction#suppressed-embeds) | `false` | `true`, `false` |

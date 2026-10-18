@@ -122,6 +122,33 @@ on message received seen by "my-bot":
             await set {_sent} to the build result of {_m}
 ```
 
+### Downloading an attachment
+
+[`download`](syntax:attachment#download) saves an attachment to a file on the server. The line
+waits until the file is written, so the next line can already read or re-upload it.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!save":
+        loop discord attachments of event-message:
+            download loop-value to folder "plugins/MyScript/uploads/"
+        reply with "saved %size of discord attachments of event-message% file(s)"
+```
+
+The path decides where the file goes:
+
+| Path | Saved as |
+| --- | --- |
+| ends with `/` or `\`, or names an existing folder | that folder, under the attachment's `file name` |
+| anything else | exactly that file (`to file "plugins/MyScript/last.png"`) |
+
+Missing folders are created, and a file already at that path is overwritten. A relative path
+starts from the server's root folder (where the server jar is), so `plugins/MyScript/` lands
+next to the other plugin folders. The words `folder`, `file` and `path` are only there for
+reading: `download {_att} to "plugins/MyScript/uploads/"` does the same as the example above.
+
+syntax: attachment#download compact
+
 ## Errors you may see
 
 | Message (console) | Cause | Fix |

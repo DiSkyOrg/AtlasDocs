@@ -1,13 +1,13 @@
 ---
 title: Erreurs
-description: Ce qui se passe lorsque Discord refuse une action, et comment try/catch et the last discord error permettent à un script d'y réagir.
-source-hash: 24cac615bff2
+description: Ce qui se passe lorsque Discord refuse une action, et comment try/catch, the last discord error et l'événement d'erreur global permettent à un script d'y réagir.
+source-hash: 34c569a7d862
 ---
 
 Cette page explique ce que fait DiSky lorsqu'une action échoue, côté Discord ou dans votre
-script, ainsi que les deux outils pour y réagir : la section `try` / `catch` (bloc indenté) et
-`the last discord error`. Vous devez déjà avoir un bot nommé `"my-bot"` connecté et un serveur où
-il peut agir.
+script, ainsi que les outils pour y réagir : la section `try` / `catch` (bloc indenté),
+`the last discord error` et l'événement `on disky exception`. Vous devez déjà avoir un bot nommé
+`"my-bot"` connecté et un serveur où il peut agir.
 
 ## Ce qui se passe sans try {#what-happens-without-a-try}
 
@@ -39,7 +39,8 @@ trace de la pile de l'exception sous-jacente.
 L'erreur est aussi mémorisée dans [the last discord error](syntax:core/expressions#expression-last-discord-error),
 afin que la ligne suivant l'échec puisse la lire. Cette expression est globale : elle contient la
 dernière erreur de n'importe quel bot, interceptée ou non, et vaut `<none>` tant qu'aucune erreur ne
-s'est produite.
+s'est produite. Pour traiter toutes ces erreurs au même endroit plutôt que de lire la console, voir
+[gérer toutes les erreurs non interceptées](#handling-every-uncaught-error).
 
 ## Intercepter les erreurs avec try {#catching-errors-with-try}
 
@@ -148,6 +149,39 @@ on ready seen by "my-bot":
 ```
 
 syntax: core/expressions#expression-last-discord-error compact
+
+## Gérer toutes les erreurs non interceptées {#handling-every-uncaught-error}
+
+Un gestionnaire [`on disky exception`](event:events#disky-error-event) (`on discord error` est le
+même événement) se déclenche sur le thread principal pour chaque erreur qu'aucun `try` n'a
+interceptée, juste avant que DiSky ne l'affiche. `event-discorderror` est l'erreur, avec les trois
+propriétés ci-dessus, et `error location` indique le fichier de script et la ligne en échec.
+Écrivez `cancel event` pour que l'erreur n'apparaisse pas dans la console.
+
+```skript
+on disky exception:
+    cancel event
+    send "[my-bot] %event-discorderror% (%error location ? "no script line"%)" to console
+    if error code of event-discorderror is 50013:
+        post "Missing permission: %error meaning of event-discorderror%" to text channel with id "123456789012345678"
+```
+
+Quatre règles précisent ce qui atteint le gestionnaire et ce qu'il change :
+
+- Une erreur levée dans un `try` va dans son `catch` et ne déclenche jamais l'événement : un script
+  peut donc combiner les deux, `try` là où il a une réponse précise, le gestionnaire global pour le reste.
+- `cancel event` décide seulement si le bloc est affiché dans la console, et cette décision est prise
+  dès que le gestionnaire marque une pause. Annulez avant le premier `wait` ou le premier effet
+  Discord, comme ci-dessus.
+- Une erreur levée par le gestionnaire lui-même (un salon de journalisation supprimé) est affichée
+  dans la console et ne déclenche jamais l'événement à nouveau : un gestionnaire en échec ne peut
+  donc pas boucler. Seule exception : une propriété modifiée sans `await`, dont la requête part en
+  arrière-plan et revient sans trigger associé ; écrivez `await set ...` dans le gestionnaire.
+- `event-bot` est le bot dont l'événement s'exécutait au moment de l'erreur. Il n'est pas défini
+  pour une erreur sans trigger derrière elle, pas plus que `error location` ; un filtre
+  `seen by "my-bot"` ignore ces erreurs.
+
+event: events#disky-error-event compact
 
 ## Codes d'erreur Discord courants {#common-discord-error-codes}
 

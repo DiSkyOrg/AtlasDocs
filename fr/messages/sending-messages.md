@@ -1,7 +1,7 @@
 ---
 title: Envoyer des messages
 description: Envoyer dans un salon, répondre à l'événement en cours, ou construire un message que vous pourrez modifier et épingler plus tard.
-source-hash: 096c18e2bd26
+source-hash: efeabf4026b7
 ---
 
 Cette page couvre les trois façons de publier un message sur Discord : `post`, `reply with` et le
@@ -98,6 +98,7 @@ Chaque propriété ci-dessous est en écriture seule sur le builder : relisez-la
 | --- | --- | --- |
 | [discord content](syntax:messageaction#discord-content) | aucune | n'importe quel texte |
 | [embed](syntax:messageaction#embed) | aucun | un [embed](doc:messages/embeds) |
+| [embeds](syntax:messageaction#embeds) | aucun | jusqu'à 10 [embeds](doc:messages/embeds#several-embeds) ; `set`, `add`, `delete` |
 | [attached poll](syntax:messageaction#attached-poll) | aucun | un [sondage](doc:messages/creating-polls) |
 | [tts](syntax:messageaction#tts) | `false` | `true`, `false` |
 | [suppressed embeds](syntax:messageaction#suppressed-embeds) | `false` | `true`, `false` |

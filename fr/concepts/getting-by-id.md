@@ -1,7 +1,7 @@
 ---
 title: Obtenir des entités par identifiant
 description: Retrouver un serveur, un rôle, un utilisateur, un membre, un salon ou un message à partir de son identifiant Discord, depuis le cache ou depuis Discord.
-source-hash: 893b6eae5d40
+source-hash: 0823b6687698
 ---
 
 Cette page présente les expressions `X with id "..."` : quelles entités en possèdent une, lesquelles
@@ -121,6 +121,37 @@ on message received seen by "my-bot":
             stop
         reply with "found %name of {_user}%"
 ```
+
+### Sans identifiant {#without-an-id}
+
+Certaines entités se retrouvent à partir d'autre chose que leur identifiant : un membre à partir de son
+utilisateur, un sticker à partir de son nom, un émoji à partir de son nom ou de son shortcode. Elles
+suivent la règle de `member with id` : écrites telles quelles, elles lisent le cache, et avec `await`
+elles interrogent aussi Discord lorsque le cache n'a rien.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!sticker":
+        await set {_member} to member of event-user in event-guild
+        set {_sticker} to sticker named "wave" in event-guild
+        if {_sticker} is not set:
+            reply with "this guild has no sticker named wave"
+            stop
+        reply with "%{_member}% asked for %name of {_sticker}%"
+```
+
+| Getter | Portée | Await | Exemple |
+| --- | --- | --- | --- |
+| [member of](syntax:core/expressions#expression-member-of-user) | `in %guild%` | facultatif : cache, ou Discord avec `await` | `await set {_m} to member of event-user in event-guild` |
+| [sticker named](syntax:core/expressions#expression-sticker-named) | `in %guild%` | facultatif : cache, ou Discord avec `await` | `sticker named "wave" in event-guild` |
+| [emoji](syntax:core/expressions#expression-emoji) | `in %guild%` facultatif | facultatif : cache, ou Discord avec `await` | `emoji "joy"`, `emote "disky" in event-guild` |
+
+Les noms sont comparés sans tenir compte de la casse. Un `member of` ou un `sticker named` qui ne trouve
+rien renvoie rien, comme une recherche par identifiant en cache ; un `member of` avec await sur un
+utilisateur absent du serveur produit une erreur *Unknown Member*. Un `emoji` qui ne correspond à rien
+produit toujours une erreur lisible (voir [Réactions](doc:messages/reactions) pour l'ordre des
+essais). La couleur d'un embed ou d'un rôle ne se recherche pas : le `color from hex code "#FF5733"`
+de Skript en construit une à partir de son code hexadécimal.
 
 ## Erreurs que vous pouvez rencontrer {#errors-you-may-see}
 

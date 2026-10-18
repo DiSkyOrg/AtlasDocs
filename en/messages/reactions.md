@@ -7,6 +7,7 @@ syntaxes:
   - message#react
   - emote#suppress-reactions
   - message#reactions
+  - core/expressions#expression-emoji
 order: 5
 ---
 
@@ -25,10 +26,10 @@ on message received seen by "my-bot":
         react to event-message with "✅"
 ```
 
-Each entry in the list is either a text or an `emote` value. A text is read as a unicode
-emoji character, or as the formatted `<:name:id>` (or `<a:name:id>` for an animated one) form
-of a custom emote; an `emote` value reacts with that custom emote directly, and is the safer
-choice since it never depends on getting the formatted text right. Get one from `emojis of`
+Each entry in the list is either a text or an `emoji` value (an `emote` is one too). A text is
+read as a unicode emoji character, or as the formatted `<:name:id>` (or `<a:name:id>` for an
+animated one) form of a custom emote; an `emoji` or `emote` value reacts with that emoji directly,
+and is the safer choice since it never depends on getting the formatted text right. Get one from `emojis of`
 a guild (cached) or `mentioned emotes of` a message; `await set` it from `emotes of` a guild
 when you need the fresh list (see [cache and await](doc:concepts/cache-and-await)).
 
@@ -41,6 +42,33 @@ on message received seen by "my-bot":
 ```
 
 syntax: message#react compact
+
+### Emojis by name
+
+[`emoji`](syntax:core/expressions#expression-emoji) (also written `emote` or `reaction`) turns a
+name into an emoji, so you never paste the character itself. It takes the Discord shortcode,
+with or without colons, the same one you type in the Discord client.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!react-name":
+        react to event-message with emoji "joy"
+        react to event-message with reactions ("sparkles" and ":thumbsup_tone2:")
+        react to event-message with emote "disky" in event-guild
+```
+
+Each text is read in this order: a custom emoji id or its `<:name:id>` form, a unicode
+character, then a name. With `in %guild%`, a name first looks for a custom emoji of that guild
+(case-insensitive), then for a shortcode; without a guild, the shortcode comes first, then the
+custom emojis any logged-in bot can see. With `await`, an id or a name missing from the cache is
+also looked up on Discord (the guild's emojis, or the bot's application emojis without a guild).
+A text that matches nothing is a readable error in the console, and the other texts of the list
+are still returned.
+
+Its result is an `emoji`, not an `emote`: `react to` accepts it, but `suppress` does not, even
+for a custom emoji found by name.
+
+syntax: core/expressions#expression-emoji compact
 
 ## Removing reactions
 
@@ -105,3 +133,4 @@ on message received seen by "my-bot":
 | --- | --- | --- |
 | *[10014] Unknown Emoji* | `react to` was given a custom emote that no longer exists, or an unformatted custom emote id | Use a fresh `emote` value from `emojis of`/`mentioned emotes of`, not a hand-written id |
 | *[50013] Missing Permissions* | The bot's role lacks **Add Reactions** in that channel | Grant **Add Reactions** to the bot's role |
+| *IllegalArgumentException: no emoji matches '\<text>'* | `emoji` was given a text that is no unicode emoji, no Discord shortcode and no custom emoji name the bot can see | Check the shortcode in the Discord client, or add `in event-guild` for a custom emoji of that guild |

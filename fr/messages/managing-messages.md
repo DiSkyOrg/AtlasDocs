@@ -1,7 +1,7 @@
 ---
 title: Gérer les messages
 description: Modifier, épingler, publier, transférer, supprimer et purger un message que vous détenez, et lire tout ce qu'il contient.
-source-hash: e88a53c09c20
+source-hash: 23a1db5fea90
 ---
 
 Cette page couvre ce que vous pouvez faire à un message qui existe déjà : le modifier, l'épingler, le
@@ -10,10 +10,10 @@ publier, le transférer, le supprimer et lire ses propriétés. Vous devez déj�
 
 ## Fonctionnement de la gestion d'un message {#how-a-message-is-managed}
 
-Chaque effet de cette page prend un `message`, et un `message` provient de l'une de quatre sources :
+Chaque effet de cette page prend un `message`, et un `message` provient de l'une de cinq sources :
 l'événement en cours (`event-message`), le [résultat de construction](doc:concepts/builders) d'un
-builder (objet de construction) de message, une récupération par identifiant, ou les messages
-épinglés d'un salon. Les deux dernières sources sont des lectures seules et exigent `await` (voir
+builder (objet de construction) de message, une récupération par identifiant, les messages
+épinglés d'un salon, ou son historique. Les trois dernières sources sont des lectures seules et exigent `await` (voir
 [cache (copie en mémoire) et await](doc:concepts/cache-and-await)) ; les effets eux-mêmes ne le
 prennent jamais, car chacun attend la réponse de Discord avant que la ligne suivante ne s'exécute.
 
@@ -26,17 +26,36 @@ on message received seen by "my-bot":
 ```
 
 Le builder renvoie le message que le bot vient d'envoyer, c'est le seul message que le bot peut
-toujours modifier. Les deux autres sources ressemblent à ceci :
+toujours modifier. Les trois autres sources ressemblent à ceci :
 
 ```skript
 await set {_msg} to message with id "1234567890" in event-channel
 await set {_pins::*} to pinned messages of event-channel
+await set {_recent::*} to the last 20 messages of event-channel
 ```
 
 [`message with id`](syntax:message#message-with-id) récupère un message d'un salon,
 [`pinned messages of`](syntax:messagechannel#pinned-messages) récupère tous ses messages épinglés ;
 les deux échouent avec une erreur lisible si l'identifiant est faux ou si le salon n'est pas visible
 par le bot.
+
+[`the last X messages of`](syntax:core/expressions#expression-message-history) lit l'historique d'un
+salon, du plus récent au plus ancien : `{_recent::1}` est donc le dernier message. N'importe quelle
+quantité fonctionne : au-delà de 100, l'historique est récupéré page par page, une requête par
+tranche de 100 messages, et un salon qui en contient moins en renvoie simplement moins. La même
+expression lit autour d'un message que vous détenez : `the 10 messages before {_msg}` (le plus proche
+d'abord, en remontant le temps) et `the 10 messages after {_msg}` (le plus proche d'abord, en avançant) ;
+le message lui-même n'est jamais inclus. Lire l'historique exige la permission
+**Read Message History**, et une quantité inférieure à 1 est refusée avec une erreur lisible.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!last":
+        await set {_recent::*} to the last 5 messages of event-channel
+        loop {_recent::*}:
+            send "%discord author of loop-value%: %discord content of loop-value%" to console
+        await set {_older::*} to the 3 messages before {_recent::5}
+```
 
 ## Modifier {#editing}
 
@@ -120,6 +139,9 @@ plus longues sont découpées en lots de 100, un message seul retombe sur une su
 messages de plus de deux semaines sont supprimés un par un ; vous n'avez jamais à filtrer la liste
 vous-même. Supprimer des messages écrits par d'autres, un par un ou en masse, exige **Gérer les
 messages**.
+
+Pour vider la fin d'un salon, purgez ce que renvoie l'historique :
+`await set {_old::*} to the last 30 messages of event-channel`, puis `purge {_old::*}`.
 
 !!! danger "La suppression est définitive"
     `destroy` et `purge` ne demandent aucune confirmation, et il n'existe aucun moyen de restaurer un

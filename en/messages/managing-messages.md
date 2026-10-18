@@ -7,8 +7,8 @@ syntaxes:
   - message#edit
   - message#pin
   - message#purge
-  - core/effects#destroy
   - message#forward
+  - core/expressions#expression-message-history
 order: 4
 ---
 
@@ -18,10 +18,10 @@ named `"my-bot"` logged in and to know how to [send a message](doc:messages/send
 
 ## How a message is managed
 
-Every effect on this page takes a `message`, and a `message` comes from one of four places:
+Every effect on this page takes a `message`, and a `message` comes from one of five places:
 the event you're in (`event-message`), the [build result](doc:concepts/builders) of a message
-builder, a fetch by id, or the pinned messages of a channel. The last two are retrieve-only
-reads and need `await` (see [cache and await](doc:concepts/cache-and-await)); the effects
+builder, a fetch by id, the pinned messages of a channel, or its history. The last three are
+retrieve-only reads and need `await` (see [cache and await](doc:concepts/cache-and-await)); the effects
 themselves never take it, since each one waits for Discord's answer before the next line runs.
 
 ```skript
@@ -33,16 +33,35 @@ on message received seen by "my-bot":
 ```
 
 The builder gives back the message the bot just sent, which is the one message the bot can
-always edit. The other two sources look like this:
+always edit. The other three sources look like this:
 
 ```skript
 await set {_msg} to message with id "1234567890" in event-channel
 await set {_pins::*} to pinned messages of event-channel
+await set {_recent::*} to the last 20 messages of event-channel
 ```
 
 [`message with id`](syntax:message#message-with-id) fetches one message from a channel,
 [`pinned messages of`](syntax:messagechannel#pinned-messages) every pinned message of it; both
 fail with a readable error when the id is wrong or the channel is not visible to the bot.
+
+[`the last X messages of`](syntax:core/expressions#expression-message-history) reads the
+history of a channel, newest first, so `{_recent::1}` is the latest message. Any amount works:
+above 100 the history is fetched page by page, one request per 100 messages, and a channel with
+fewer messages simply gives back fewer. The same expression reads around a message you hold:
+`the 10 messages before {_msg}` (closest first, going back in time) and
+`the 10 messages after {_msg}` (closest first, going forward); the message itself is never
+included. Reading the history needs the **Read Message History** permission, and an amount
+below 1 is refused with a readable error.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!last":
+        await set {_recent::*} to the last 5 messages of event-channel
+        loop {_recent::*}:
+            send "%discord author of loop-value%: %discord content of loop-value%" to console
+        await set {_older::*} to the 3 messages before {_recent::5}
+```
 
 ## Editing
 
@@ -125,6 +144,9 @@ on message received seen by "my-bot":
 split into batches of 100, a single message falls back to a plain delete, and messages older
 than two weeks are deleted one by one; you never have to filter the list yourself. Deleting
 messages written by someone else, one at a time or in bulk, needs **Manage Messages**.
+
+To clear the end of a channel, purge what the history gives back:
+`await set {_old::*} to the last 30 messages of event-channel`, then `purge {_old::*}`.
 
 !!! danger "Deletion is permanent"
     `destroy` and `purge` do not ask for confirmation and there is no way to restore a deleted

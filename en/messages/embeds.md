@@ -7,6 +7,7 @@ syntaxes:
   - core/expressions#expression-new-embed
   - core/expressions#expression-new-embed-field
   - embedbuilder#fields
+  - messageaction#embeds
 order: 2
 ---
 
@@ -48,7 +49,7 @@ total-length limits only apply once the embed is attached somewhere (see
 | [title](syntax:embedbuilder#title) | none | text, up to 256 characters |
 | [title url](syntax:embedbuilder#title-url) | none | an `http(s)://` or `attachment://` url |
 | [description](syntax:embedbuilder#description) | none | text, up to 4096 characters |
-| [color](syntax:embedbuilder#color) | none | a color |
+| [color](syntax:embedbuilder#color) | none | a color: a named one (`orange`), or any hex code with Skript's `color from hex code "#FF5733"` |
 | [discord author](syntax:embedbuilder#discord-author) | none | text, up to 256 characters |
 | [author icon](syntax:embedbuilder#author-icon) | none | an `http(s)://` or `attachment://` url |
 | [author url](syntax:embedbuilder#author-url) | none | an `http(s)://` or `attachment://` url |
@@ -114,10 +115,39 @@ added.
 
 syntax: core/expressions#expression-new-embed-field compact
 
+## Several embeds
+
+A message carries up to 10 embeds. `post` and `reply with` take one; for more, use the
+[embeds](syntax:messageaction#embeds) property of a message builder. `set` replaces the list,
+`add` appends to it and `delete` empties it, while the singular `embed` property sets a single
+embed and drops the others. Each embed is copied on the line that sets or adds it, so changing
+`{_e}` afterwards changes nothing in the builder.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!report":
+        set {_summary} to a new discord embed
+        set title of {_summary} to "Summary"
+        set {_details} to a new discord embed
+        set title of {_details} to "Details"
+        set {_m} to a new message with content "Weekly report" in event-channel
+        set embeds of {_m} to {_summary} and {_details}
+        await set {_sent} to the build result of {_m}
+        reply with "%size of embeds of {_sent}% embeds sent"
+```
+
+Embeds have no id, so there is no `remove`: set the list again without the one you want gone.
+The list cannot be read back from the builder either; read `embeds of` the sent message. Going
+over 10, by `set` or by `add`, is refused on that line with a readable error and leaves the
+builder as it was. A message holding components V2 (containers, sections, text displays) cannot
+carry any embed.
+
+syntax: messageaction#embeds compact
+
 ## Reading embeds
 
-[`embeds of`](syntax:message#embeds) a sent message returns its embeds; a message built with
-DiSky carries a single embed, so the list usually holds one element. Each one comes
+[`embeds of`](syntax:message#embeds) a sent message returns its embeds in display order, up to
+10 (see [Several embeds](#several-embeds)). Each one comes
 back as JDA's own `MessageEmbed`, a read-only type with no Skript type of its own, but DiSky
 converts it to an `embedbuilder` wherever one is expected: store it in a variable, set more
 properties on it, and post it again as a new embed.
@@ -144,5 +174,6 @@ the new embed instead (see [managing messages](doc:messages/managing-messages)).
 | *IllegalArgumentException: Name cannot be longer than 256 characters* (or *Value cannot be longer than 1024 characters*) | A field's name or value is too long | Shorten it before creating the field |
 | *IllegalStateException: Cannot build an empty embed!* | The embed had nothing set (no title, description, fields, author, footer, image or thumbnail) when it was attached to a message | Set at least one property before `set embed of` or `a new message with embed` |
 | *IllegalStateException: Cannot build an embed with more than 25 embed fields set!* | More than 25 fields were added | Keep the field count at 25 or fewer, or split the content across several embeds |
+| *IllegalArgumentException: a message carries 10 embeds at most, this one would have 11* | `set embeds of` or `add ... to embeds of` a message builder went over Discord's limit | Keep 10 embeds or fewer per message; send the rest in a second message |
 
 entity: embedbuilder

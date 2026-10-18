@@ -1,7 +1,7 @@
 ---
 title: Réactions
 description: Réagir à un message, retirer une réaction et lire les réactions que Discord enregistre sur celui-ci.
-source-hash: e5dfb6d479bd
+source-hash: a60b31a5bfc3
 ---
 
 Cette page couvre l'ajout d'une réaction à un message, son retrait, les événements déclenchés lorsqu'un
@@ -19,10 +19,10 @@ on message received seen by "my-bot":
         react to event-message with "✅"
 ```
 
-Chaque élément de la liste est soit un texte, soit une valeur `emote`. Un texte est lu comme un
-caractère émoji unicode, ou comme la forme `<:name:id>` (ou `<a:name:id>` pour un émoji animé) d'un
-émoji personnalisé ; une valeur `emote` réagit directement avec l'émoji personnalisé, et c'est le
-choix le plus sûr, car il ne dépend jamais de la bonne écriture d'un texte. Obtenez-la avec
+Chaque élément de la liste est soit un texte, soit une valeur `emoji` (une `emote` en est une aussi).
+Un texte est lu comme un caractère émoji unicode, ou comme la forme `<:name:id>` (ou `<a:name:id>`
+pour un émoji animé) d'un émoji personnalisé ; une valeur `emoji` ou `emote` réagit directement avec
+cet émoji, et c'est le choix le plus sûr, car il ne dépend jamais de la bonne écriture d'un texte. Obtenez-la avec
 `emojis of` d'un serveur (depuis le cache, copie en mémoire) ou `mentioned emotes of` d'un message ;
 utilisez `await set` avec `emotes of` d'un serveur lorsque vous avez besoin de la liste à jour (voir
 [cache et await](doc:concepts/cache-and-await)).
@@ -36,6 +36,33 @@ on message received seen by "my-bot":
 ```
 
 syntax: message#react compact
+
+### Émojis par nom {#emojis-by-name}
+
+[`emoji`](syntax:core/expressions#expression-emoji) (qui s'écrit aussi `emote` ou `reaction`)
+transforme un nom en émoji : vous n'avez jamais à coller le caractère lui-même. Il prend le shortcode
+Discord, avec ou sans deux-points, celui que vous tapez dans le client Discord.
+
+```skript
+on message received seen by "my-bot":
+    if discord content of event-message is "!react-name":
+        react to event-message with emoji "joy"
+        react to event-message with reactions ("sparkles" and ":thumbsup_tone2:")
+        react to event-message with emote "disky" in event-guild
+```
+
+Chaque texte est lu dans cet ordre : un identifiant d'émoji personnalisé ou sa forme `<:name:id>`, un
+caractère unicode, puis un nom. Avec `in %guild%`, un nom cherche d'abord un émoji personnalisé de ce
+serveur (sans tenir compte de la casse), puis un shortcode ; sans serveur, le shortcode passe en
+premier, puis les émojis personnalisés visibles par n'importe quel bot connecté. Avec `await`, un
+identifiant ou un nom absent du cache est aussi recherché sur Discord (les émojis du serveur, ou les
+émojis d'application du bot sans serveur). Un texte qui ne correspond à rien produit une erreur
+lisible dans la console, et les autres textes de la liste sont tout de même renvoyés.
+
+Son résultat est un `emoji`, pas une `emote` : `react to` l'accepte, mais pas `suppress`, même pour
+un émoji personnalisé trouvé par son nom.
+
+syntax: core/expressions#expression-emoji compact
 
 ## Retirer des réactions {#removing-reactions}
 
@@ -101,3 +128,4 @@ on message received seen by "my-bot":
 | --- | --- | --- |
 | *[10014] Unknown Emoji* | `react to` a reçu un émoji personnalisé qui n'existe plus, ou un identifiant d'émoji non formaté | Utilisez une valeur `emote` fraîche obtenue avec `emojis of` ou `mentioned emotes of`, et non un identifiant saisi à la main |
 | *[50013] Missing Permissions* | Le rôle du bot n'a pas **Add Reactions** dans ce salon | Accordez **Add Reactions** au rôle du bot |
+| *IllegalArgumentException: no emoji matches '\<text>'* | `emoji` a reçu un texte qui n'est ni un émoji unicode, ni un shortcode Discord, ni le nom d'un émoji personnalisé visible par le bot | Vérifiez le shortcode dans le client Discord, ou ajoutez `in event-guild` pour un émoji personnalisé de ce serveur |
