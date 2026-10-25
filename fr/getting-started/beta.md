@@ -1,7 +1,7 @@
 ---
 title: Statut bêta
 description: Ce que la bêta de DiSky v5 implique pour vos scripts, et ce qui n'est pas encore disponible.
-source-hash: 6b105eb1ce3e
+source-hash: c2ab8b73af34
 ---
 
 DiSky v5 est en bêta publique. Cette page indique ce sur quoi vous pouvez compter aujourd'hui, ce qui
@@ -43,8 +43,9 @@ les versions récentes corrigent des problèmes d'analyse qui peuvent toucher le
 ## Pas encore pris en charge {#not-supported-yet}
 
 Quelques fonctionnalités de niche de DiSky 4 ne sont pas encore disponibles en v5. Tout le reste est
-couvert, avec une syntaxe parfois légèrement différente : vérifiez la forme v5 d'une syntaxe dans
-l'atlas avant de porter un script.
+couvert, avec une syntaxe parfois légèrement différente : [Venir de DiSky 4](doc:migration) donne la
+forme v5 des syntaxes qui ont changé, l'ordre dans lequel porter un script et la liste de ce que la v5
+n'a pas.
 
 Si une syntaxe de DiSky 4 n'a pas d'équivalent dans l'atlas, elle fait partie de ces fonctionnalités.
 Ouvrez une issue si votre bot en dépend, pour qu'elle puisse être priorisée.

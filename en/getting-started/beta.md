@@ -43,8 +43,8 @@ releases fix parser issues that can affect addon syntaxes.
 ## Not supported yet
 
 A few niche features from DiSky 4 are not available in v5 yet. Everything else is covered, with a
-slightly different syntax in places: check the atlas for the v5 form of a syntax before porting a
-script.
+slightly different syntax in places: [Coming from DiSky 4](doc:migration) gives the v5 form of the
+syntaxes that changed, the order to port a script in, and the list of what v5 does not have.
 
 If a DiSky 4 syntax has no equivalent in the atlas, it is one of those features. Open an issue if
 your bot depends on it, so it can be prioritized.
